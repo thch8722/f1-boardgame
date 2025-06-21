@@ -1,0 +1,15 @@
+# Node modules
+node_modules/
+
+# IDE files
+.idea/
+
+# Logs
+*.log
+
+# Build outputs
+dist/
+build/
+
+# TypeScript incremental build files
+*.tsbuildinfo

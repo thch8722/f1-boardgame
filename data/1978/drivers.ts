@@ -1,0 +1,335 @@
+import {Driver} from "../../logic/types";
+
+export const drivers1978: Driver[] = [
+    {
+        id: "niki_lauda",
+        name: "Niki Lauda",
+        attributes: {
+            mechanicalFeel: 7,
+            speed: 5,
+            focus: 7,
+            racecraft: 6,
+            adaptability: 7 },
+        team: "brabham",
+        car: "brabham_bt46b_1",
+        homeTrackId: "german_gp",
+        carNumber: 1,
+        traits: ["Cool and calm"]
+    },
+    {
+        id: "john_watson",
+        name: "John Watson",
+        attributes: {
+            mechanicalFeel: 6,  // +2
+            speed: 5,           // +1
+            focus: 4,           //  0
+            racecraft: 6,       // +2
+            adaptability: 6     // +3
+        },
+        team: "brabham",
+        car: "brabham_bt46b_2",
+        homeTrackId: "british_gp",
+        carNumber: 2,
+        traits: []
+    },
+    {
+        id: "didier_pironi",
+        name: "Didier Pironi",
+        attributes: {
+            mechanicalFeel: 4,  //  0
+            speed: 7,           // +3
+            focus: 5,           // +1
+            racecraft: 6,       // +2
+            adaptability: 5     // +1
+        },team: "tyrrell",
+        car: "tyrrell_008_4",
+        homeTrackId: "french_gp",
+        carNumber: 3,
+        traits: []
+    },
+    {
+        id: "patrick_depailler",
+        name: "Patrick Depailler",
+        attributes: {
+            mechanicalFeel: 6,  // +2
+            speed: 6,           // +2
+            focus: 4,           //  0
+            racecraft: 5,       // +1
+            adaptability: 7     // +3
+        },
+        team: "tyrrell",
+        car: "tyrrell_008_3",
+        homeTrackId: "french_gp",
+        carNumber: 4,
+        traits: []
+    },
+    {
+        id: "mario_andretti",
+        name: "Mario Andretti",
+        attributes: {
+            mechanicalFeel: 7,  // +3
+            speed: 6,           // +3
+            focus: 6,           // +2
+            racecraft: 6,       // +2
+            adaptability: 7     // +3
+        },
+        team: "lotus",
+        car: "lotus_79_5",   // Example chassis
+        homeTrackId: "us_gp_east",
+        carNumber: 5,
+        traits: ["Cool and calm"]
+    },
+    {
+        id: "ronnie_peterson",
+        name: "Ronnie Peterson",
+        attributes: {
+            mechanicalFeel: 6,  // very good, felt the car well
+            speed: 7,           // raw speed king, top pace
+            focus: 5,           // a bit wild, sometimes lost focus under pressure
+            racecraft: 7,       // brilliant overtaking, aggressive style
+            adaptability: 5     // good but not a chameleon
+        },
+        team: "lotus",
+        car: "lotus_79_6",
+        homeTrackId: "swedish_gp",
+        carNumber: 6,
+        traits: ["Unpredictable"]
+    },
+    {
+        id: "james_hunt",
+        name: "James Hunt",
+        attributes: {
+            mechanicalFeel: 6,  // felt the car well but sometimes pushed too hard
+            speed: 6,           // quick and daring on the straights
+            focus: 4,           // could be streaky, sometimes lost composure
+            racecraft: 7,       // aggressive overtaker, no fear
+            adaptability: 6     // decent at adjusting to conditions
+        },
+        team: "mclaren",
+        car: "mclaren_m26_7",
+        homeTrackId: "british_gp",
+        carNumber: 7,
+        traits: ["Showman"]
+    },
+    {
+        id: "patrick_tambay",
+        name: "Patrick Tambay",
+        attributes: {
+            mechanicalFeel: 4,  // average feel for the car
+            speed: 4,           // below top speed, but not slow
+            focus: 3,           // struggles to keep concentration sometimes
+            racecraft: 4,       // decent but not exceptional in overtakes or defense
+            adaptability: 3     // difficulty adapting to changing conditions or setup
+        },
+        team: "mclaren",
+        car: "mclaren_m26b_8",
+        homeTrackId: "french_gp",
+        carNumber: 8,
+        traits: []
+    },
+    {
+        id: "carlos_reutemann",
+        name: "Carlos Reutemann",
+        attributes: {
+            mechanicalFeel: 6,  // excellent feedback and car setup insight
+            speed: 6,           // very fast, especially in qualifying
+            focus: 6,           // calm and composed under pressure
+            racecraft: 6,       // smart overtaker, strategic
+            adaptability: 5     // adjusts well to different conditions
+        },
+        team: "ferrari",
+        car: "ferrari_312t3_11",
+        homeTrackId: "italian_gp",
+        carNumber: 11,
+        traits: ["Cool and calm"]
+    },
+    {
+        id: "gilles_villeneuve",
+        name: "Gilles Villeneuve",
+        attributes: {
+            mechanicalFeel: 6,  // great feel, though sometimes pushing limits
+            speed: 7,           // blazing fast and fearless on the straights
+            focus: 5,           // passionate but a bit wild, can be inconsistent
+            racecraft: 7,       // aggressive overtaker and hard charger
+            adaptability: 5     // sometimes struggles with changing conditions
+        },
+        team: "ferrari",
+        car: "ferrari_312t3_12",
+        homeTrackId: "canadian_gp",
+        carNumber: 12,
+        traits: ["Aggressive", "Rookie"]
+    },
+    {
+        id: "jody_scheckter",
+        name: "Jody Scheckter",
+        attributes: {
+            mechanicalFeel: 6,  // very good setup feel, helps car handling
+            speed: 6,           // fast but not the flashiest
+            focus: 6,           // mentally sharp and consistent
+            racecraft: 6,       // solid race instincts and tactical
+            adaptability: 6     // handles changing conditions well
+        },
+        team: "wolf",
+        car: "wolf_wr7_11",
+        homeTrackId: "south_african_gp",
+        carNumber: 20,
+        traits: ["Cool and calm"]
+    },
+    {
+        id: "jacques_laffite",
+        name: "Jacques Laffite",
+        attributes: {
+            mechanicalFeel: 6,   // good with car setup and feel
+            speed: 6,            // quick and aggressive
+            focus: 5,            // solid concentration
+            racecraft: 6,        // clever and bold on track
+            adaptability: 6      // handles different conditions well
+        },
+        team: "ligier",
+        car: "ligier_js7_8",
+        homeTrackId: "monaco_gp",
+        carNumber: 26,
+        traits: []
+    },
+    {
+        id: "jean_pierre_jabouille",
+        name: "Jean-Pierre Jabouille",
+        attributes: {
+            mechanicalFeel: 7,   // excellent technical understanding, especially with turbo Renault
+            speed: 5,            // decent pace but not among fastest
+            focus: 5,            // good concentration
+            racecraft: 5,        // competent but not overly aggressive
+            adaptability: 5      // handles new tech well
+        },
+        team: "renault",
+        car: "renault_rs01_15",
+        homeTrackId: "french_gp",
+        carNumber: 15,
+        traits: []
+    },
+    {
+        id: "derek_daly",
+        name: "Derek Daly",
+        attributes: {
+            mechanicalFeel: 5,
+            speed: 5,
+            focus: 6,
+            racecraft: 4,
+            adaptability: 4
+        },
+        team: "ensign",
+        car: "ensign_n177_24",
+        homeTrackId: "british_gp",
+        carNumber: 22,
+        traits: ["Rookie"]
+    },
+    {
+        id: "vittorio_brambilla",
+        name: "Vittorio Brambilla",
+        attributes: {
+            mechanicalFeel: 1,  // really struggled with car feel
+            speed: 2,           // very low pace, barely competitive
+            focus: 1,           // easily distracted, prone to mistakes
+            racecraft: 2,       // weak wheel-to-wheel skills
+            adaptability: 1     // poor at adjusting to conditions
+        },
+        team: "surtees",
+        car: "surtees_ts19_19",
+        homeTrackId: "italian_gp",
+        carNumber: 19,
+        traits: ["Rookie"]
+    },
+    {
+        id: "riccardo_patrese",
+        name: "Riccardo Patrese",
+        attributes: {
+            mechanicalFeel: 2,  // still learning car feel, close to 1
+            speed: 3,           // a bit slow for a rookie
+            focus: 1,           // shaky nerves, very inconsistent
+            racecraft: 2,       // still inexperienced in battles
+            adaptability: 2     // learning to cope with changes
+        },
+        team: "arrows",
+        car: "arrows_a1_35",
+        homeTrackId: "italian_gp",
+        carNumber: 35,
+        traits: ["Rookie"]
+    },
+    {
+        id: "emerson_fittipaldi",
+        name: "Emerson Fittipaldi",
+        attributes: {
+            mechanicalFeel: 5,  // still good car sense but not razor sharp
+            speed: 5,           // competitive but no longer blazing fast
+            focus: 5,           // experienced but sometimes less sharp
+            racecraft: 5,       // solid but no longer flawless
+            adaptability: 5     // able to handle different conditions well
+        },team: "fittipaldi",
+        car: "fittipaldi_1",
+        homeTrackId: "brazilian_gp",
+        carNumber: 14,
+        traits: ["Cool and calm"]
+    },
+    {
+        id: "alan_jones",
+        name: "Alan Jones",
+        attributes: {
+            mechanicalFeel: 6,  // solid car sense and setup feedback
+            speed: 6,           // quick and aggressive on track
+            focus: 4,           // sometimes emotional, can lose composure
+            racecraft: 6,       // good overtaking and race instincts
+            adaptability: 5     // decent at adjusting to changing conditions
+        },team: "williams",
+        car: "williams_fw06_27",
+        homeTrackId: "british_gp",
+        carNumber: 27,
+        traits: ["Rookie"]
+    },
+    {
+        id: "clay_regazzoni",
+        name: "Clay Regazzoni",
+        attributes: {
+            mechanicalFeel: 6,  // good car feedback, veteran sense
+            speed: 6,           // competitive pace, can push well
+            focus: 5,           // generally steady, occasional lapses
+            racecraft: 6,       // smart racer, good tactical sense
+            adaptability: 5     // decent adapting to changing conditions
+        },
+        team: "shadow",
+        car: "shadow_dn8_17",
+        homeTrackId: "austrian_gp",
+        carNumber: 17,
+        traits: []
+    },
+    {
+        id: "hans_joachim_stuck",
+        name: "Hans-Joachim Stuck",
+        attributes: {
+            mechanicalFeel: 2,  // struggles sometimes to get perfect car feedback
+            speed: 5,           // decent pace but rarely outstanding
+            focus: 3,           // concentration can waver under pressure
+            racecraft: 3,       // not always sharp in wheel-to-wheel battles
+            adaptability: 3     // slow to adjust to changing conditions
+        },team: "shadow",
+        car: "shadow_dn8_16",
+        homeTrackId: "german_gp",
+        carNumber: 16,
+        traits: []
+    },
+    {
+        id: "hector_rebaque",
+        name: "Héctor Rebaque",
+        attributes: {
+            mechanicalFeel: 3,  // often struggled to get the car working perfectly
+            speed: 3,           // below average outright pace
+            focus: 3,           // sometimes inconsistent concentration
+            racecraft: 3,       // limited overtaking and defensive skills
+            adaptability: 3     // slow to react to changing conditions or setups
+        },team: "rebaque",
+        car: "lotus_77_25",
+        homeTrackId: "british_gp",
+        carNumber: 25,
+        traits: []
+    }
+]
+
