@@ -9,9 +9,18 @@ export type CarComponent = 'engine' | 'tyres' | 'brakes' | 'gearbox';
 
 export type CarComponents = Record<CarComponent, number>;
 
+export type AttributeModifierSource = 'setup' | 'damage' | 'wear';
+
+export type AttributeModifierCondition =
+    | "qualification"
+    | "wet"
+    | "finalLaps"
+    | "wheelToWheel";
+
 export type AttributeModifier = {
-    source: string;
+    source: AttributeModifierSource;
     mod: Partial<CarAttributes>;
+    condition?: AttributeModifierCondition | AttributeModifierCondition[];
     description?: string;
 };
 
@@ -24,6 +33,8 @@ export type CarTemplate = {
     components: CarComponents;
 };
 
+export type TireType = "dry" | "wet";
+
 // In-race instance of a car
 export type CarInstance = {
     id: string;
@@ -31,6 +42,7 @@ export type CarInstance = {
     baseCar: CarTemplate;
     modifiers: AttributeModifier[];
     components: CarComponents;
+    tireType: TireType;
     status: {
         incidents: string[];
     };
@@ -94,6 +106,20 @@ export type RaceResult = {
     standings: RaceStanding[];
 };
 
+export type TrackModifierCondition =
+    | "qualification"
+    | "wet"
+    | "finalLaps"
+    | "wheelToWheel"
+    | "hotWeather"
+    | "earlyRace";
+
+export type TrackModifier = {
+    condition: TrackModifierCondition | TrackModifierCondition[];
+    mod: Partial<CarAttributes>;
+    description?: string;
+};
+
 export type OvertakeFavouredStat = "speed" | "handling";
 
 export type OvertakingZone = {
@@ -106,6 +132,10 @@ export type TrackAttributes = {
     speedBias: number;          // 1-4
     technicality: number;       // 1-4
     rainChance: number;         // 0–100
+    dryChance: number;          // 0-100
+    hotChance: number;          // 0-100
+    coldChance: number;         // 0-100
+    dustyChance: number;        // 0-100
     prestige: number;           // 1-4
     wearFactor: number;         // 1-4
     laps: number;               //1-100
@@ -117,6 +147,7 @@ export type Track = {
     country: string;
     attributes: TrackAttributes;
     overtakingZones: OvertakingZone[];
+    modifiers?: TrackModifier[];
     eventDate: string;
 };
 
@@ -149,16 +180,42 @@ export type EventEffect =
 export interface IncidentCard extends Card {
     effect: IncidentEffect;
 }
-
+/*
+export interface RaceCard extends Card {
+  effect: RaceEffect;
+  // maybe later: modifiers: AttributeModifier[]
+}
+ */
 export type IncidentEffect =
     | "spin"             // Lose time + places; also reduces qualifying potential
     | "overheat"         // Forced to defend next turn (-1 pace, +1 defend)
-    | "gearboxSnag"      // Serious car glitch — could lead to performance drop or component damage
-    | "loseHandling"     // Permanent -1 to the car's handling attribute
-    | "loseSpeed"        // Permanent -1 to the car's speed attribute
+    | "loseHandling"     // -1 to the car's handling attribute this round
+    | "loseSpeed"        // -1 to the car's speed attribute
     | "loseComponentHP"  // Lose 1 HP on a component (e.g., brakes, engine); 0 HP is dangerous
     | "loseSetup"        // Lose setup advantage; may affect pace or control depending on phase
     | "contact"          // risk for me and for closest rival
+    | "crash"           // this is insane, but it happens
+
+export type TrackCondition = "hot" | "cold" | "wet" | "dry" | "dust"  // the last one is for cards
+
+export type TrackConditionChances = {
+    rain: number;       // 0–100
+    dry: number;        // 0–100
+    heat: number;       // 0–100
+    cold: number        // 0–100
+    dust: number;       // 0–100
+}
+
+export type RaceEffect =
+    | { type: "track"; condition: TrackCondition }
+    | { type: "trackConditionChange" }      // <-- special trigger, not a condition
+    | { type: "yellowFlag" }                // close one or more overtaking zones, forced slow down
+    | { type: "oilSpill" };                 // close one overtakig zone and less grip/handling, increased risk
+
+export interface RaceCard extends Card {
+    effect: RaceEffect;
+    // Optional: detailed modifiers can be added later, depending on the card
+}
 
 // Phase data:
 export type PhaseType =

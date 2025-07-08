@@ -27,12 +27,6 @@ export const incidentCardTemplates: IncidentCardTemplate[] = [
         count: 4,
     },
     {
-        effect: "gearboxSnag",
-        name: "Gearbox Snag",
-        description: "Gearbox problem slows car down",
-        count: 2,
-    },
-    {
         effect: "loseHandling",
         name: "Handling Loss",
         description: "Loss of car handling (-1 handling)",
@@ -50,5 +44,16 @@ export const incidentCardTemplates: IncidentCardTemplate[] = [
         description: "Setup compromised, slower lap times",
         count: 2,
     },
-
+    {
+        effect: "contact",
+        name: "Wheel to wheel Contact",
+        description: "Contact with closest car ahead (If there is one)",
+        count: 1,
+    },
+    {
+        effect: "crash",
+        name: "Crash!!!",
+        description: "End of race - add component damage",
+        count: 2,
+    },
 ];

@@ -89,6 +89,8 @@ test("startGame initializes correctly", () => {
     testLog("INCIDENT! : " + incidentCard.name);
 
      */
+    const raceCard = game.raceCards.draw();
+    testLog("Race card : " + raceCard.name);
 
     for (const phase of game.phases) {
         testLog("Phase " + phase.name);

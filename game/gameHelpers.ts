@@ -39,6 +39,7 @@ export function createGameTeams(teams: Team[]): GameTeam[] {
                 id: carId,
                 driverId: "", // will assign driver later as needed
                 baseCar,
+                tireType: "dry",
                 modifiers: [] as AttributeModifier[],
                 components: { ...baseCar.components },
                 status: {

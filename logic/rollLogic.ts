@@ -19,3 +19,19 @@ export const rollDice = (): number => {
         case "2d6": return roll2D6();
     }
 }
+
+import { TrackCondition, TrackConditionChances } from "../logic/types";
+
+export const rollTrackCondition = (chances: TrackConditionChances): TrackCondition => {
+    const roll = Math.floor(Math.random() * 100) + 1;
+    let sum = 0;
+
+    if ((sum += chances.rain) >= roll) return "wet";
+    if ((sum += chances.dry) >= roll) return "dry";
+    if ((sum += chances.heat) >= roll) return "hot";
+    if ((sum += chances.cold) >= roll) return "cold";
+    if ((sum += chances.dust) >= roll) return "dust";
+
+    // fallback, shouldn't happen if chances add up to 100
+    throw new Error("Invalid TrackConditionChances: total does not sum to 100");
+};

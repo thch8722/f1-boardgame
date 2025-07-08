@@ -1,7 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
-import {EventCard, IncidentCard} from "./types";
+import {EventCard, IncidentCard, RaceCard} from "./types";
 import {incidentCardTemplates} from "../data/cards/incidentCards";
 import {eventCardTemplates} from "../data/cards/eventCards";
+import {raceCardTemplates} from "../data/cards/raceCards";
 
 
 export interface Card {
@@ -53,6 +54,7 @@ export class CardDeck<T extends Card> {
 
 
 // Helper generic to build cards from templates
+/*
 function buildCardsFromTemplates<T extends { effect: string; name: string; description: string; count: number }, R extends Omit<T, "count"> & { id: string }>(
     templates: T[]
 ): R[] {
@@ -67,16 +69,38 @@ function buildCardsFromTemplates<T extends { effect: string; name: string; descr
     );
 }
 
+ */
+
+function buildCardsFromTemplates<
+    T extends { effect: any; name: string; description: string; count: number },
+    R extends Omit<T, "count"> & { id: string }
+>(templates: T[]): R[] {
+    return templates.flatMap(template =>
+        Array.from({ length: template.count }, () => {
+            const { count, ...cardData } = template;
+            return {
+                id: uuidv4(),
+                ...cardData,
+            } as R;
+        })
+    );
+}
 
 
-
-// Build Incident Deck
+// Build Incident Deck:
 export function buildIncidentDeck(): CardDeck<IncidentCard> {
     const incidentCards = buildCardsFromTemplates<typeof incidentCardTemplates[number], IncidentCard>(incidentCardTemplates);
     return new CardDeck(incidentCards);
 }
 
+// build event card deck:
 export function buildEventDeck(): CardDeck<EventCard> {
     const eventCards = buildCardsFromTemplates<typeof eventCardTemplates[number], EventCard>(eventCardTemplates);
     return new CardDeck(eventCards);
+}
+
+// build race card deck:
+export function buildRaceCardDeck(): CardDeck<RaceCard> {
+    const raceCards = buildCardsFromTemplates<typeof raceCardTemplates[number], RaceCard>(raceCardTemplates);
+    return new CardDeck(raceCards);
 }
