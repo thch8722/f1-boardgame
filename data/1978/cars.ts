@@ -47,7 +47,7 @@ export const cars1978: CarTemplate[] = [
     },
     {
         id: "wolf_wr6",
-        name: "Wolf WR5",
+        name: "Wolf WR6",
         team: "Wolf",
         attributes: {
             speed: 4,

@@ -1,6 +1,9 @@
-import {CarInstance, GameDriver} from "./types";
+import {CarInstance, Driver, DriverRaw, GameDriver} from "./types";
 
 
-export const getCar = (driver: GameDriver): CarInstance => {
-    return driver.car;
+function hydrateDriver(raw: DriverRaw, carsById: Record<string, CarInstance>): Driver {
+    return {
+        ...raw,
+        car: carsById[raw.car], // replace string ID with actual car object
+    };
 }

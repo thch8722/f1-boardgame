@@ -1,52 +1,72 @@
-import {AttributeModifier, CarInstance, CarTemplate, Driver, GameDriver, GameTeam, Team, Track} from "../logic/types";
+import {
+    AttributeModifier,
+    CarInstance,
+    CarTemplate,
+    DriverRaw,
+    GameDriver,
+    GameTeam,
+    Team,
+    Track
+} from "../logic/types";
 import {cars1978} from "../data/1978";
+import {testLog} from "./game.test";
 
 
-export function createGameDrivers(drivers: Driver[]): GameDriver[] {
-    return drivers
-        .map(driver => ({
-            ...driver,
-            isNPC: true,
-            Player: "",
-        }))
+export function createGameDrivers(
+    rawDrivers: DriverRaw[],
+    carRecord: Record<string, CarInstance>
+): GameDriver[] {
+    return rawDrivers
+        .map(raw => {
+            const carInstance = carRecord[raw.car];
+            if (!carInstance) {
+                throw new Error(`No car found for driver ${raw.name} (id: ${raw.car})`);
+            }
+            return {
+                ...raw,
+                car: carInstance,
+                isNPC: true,
+                player: undefined,
+            };
+        })
         .sort((a, b) => a.carNumber - b.carNumber);
 }
 
 export function createGameTeams(teams: Team[]): GameTeam[] {
-    const gameTeams = teams
-        .map(team => ({
-            ...team,
-            isNPC: true,
-            Player: ""
-        }));
+    const gameTeams = teams.map(team => ({
+        ...team,
+        isNPC: true,
+        Player: "",
+        cars: team.cars || [],  // initialize if missing
+    }));
 
     for (const team of gameTeams) {
-
-        // Count how many times each model appears to generate chassis number correctly
         const modelCounts: Record<string, number> = {};
+
         for (const model of team.models) {
             const baseCar: CarTemplate | undefined = getCarTemplateById(model, cars1978);
             const modelId = baseCar?.id;
+
             if (!modelId || !baseCar) {
-                break;
+                console.warn(`Missing car template for model ${model}`);
+                continue;
             }
+
             modelCounts[modelId] = (modelCounts[modelId] || 0) + 1;
             const chassisNumber = modelCounts[modelId];
             const carId = `${modelId}_${chassisNumber}`;
 
-            // Create car instance
             const carInstance: CarInstance = {
                 id: carId,
-                driverId: "", // will assign driver later as needed
+                driverId: "",
                 baseCar,
                 tireType: "dry",
-                modifiers: [] as AttributeModifier[],
+                modifiers: [],
                 components: { ...baseCar.components },
                 status: {
                     incidents: [],
                 },
             };
-
 
             team.cars.push(carInstance);
         }
@@ -54,6 +74,7 @@ export function createGameTeams(teams: Team[]): GameTeam[] {
 
     return gameTeams;
 }
+
 
 export function getTeamById(id: string, teams: GameTeam[]): GameTeam | undefined {
     return teams.find(team => team.id === id);
@@ -73,7 +94,31 @@ export function getTrackById(id: string, tracks: Track[]): Track | undefined {
 
 // TODO:
 // export function getTrackById(id: string, )
+export function buildCarRecord(teams: GameTeam[]): Record<string, CarInstance> {
+    const carMap: Record<string, CarInstance> = {};
+    for (const team of teams) {
+        for (const car of team.cars) {
+            carMap[car.id] = car;
+        }
+    }
+    return carMap;
+}
 
+export function assignNpcDriversToCars(drivers: GameDriver[], carRecord: Record<string, CarInstance>) {
+    const npcs = drivers.filter(d => d.isNPC);
+    for (const driver of npcs) {
+        const carId: string = driver.car as unknown as string;
+        if (carId && carRecord[carId]) {
+            const car = carRecord[carId];
+            car.driverId = driver.id;
+            driver.car = car;
+        }
+         else {
+            console.warn(`No car found for driver ... ${driver.name} with car ID ${driver.car}`);
+        }
+    }
+}
+/*
 export function assignNpcDriversToCars(drivers: GameDriver[], teams: GameTeam[]) {
     for (const team of teams) {
         const teamDrivers = drivers.filter(d => d.team === team.id && d.isNPC);
@@ -87,6 +132,8 @@ export function assignNpcDriversToCars(drivers: GameDriver[], teams: GameTeam[])
         }
     }
 }
+
+ */
 
 class GameTrack {
 }
@@ -105,7 +152,7 @@ export function assignPlayerToCar(driverId: string, carId: string, drivers: Game
     const car = teams.flatMap(t => t.cars).find(c => c.id === carId);
 
     if (driver && car) {
-        driver.car = car.id;
+        driver.car = car;
         car.driverId = driver.id;
         driver.isNPC = false;
         car.status = car.status || { incidents: [] };

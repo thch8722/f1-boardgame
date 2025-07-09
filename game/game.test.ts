@@ -1,7 +1,7 @@
 import {startGame} from "./game";
 import {teams1978} from "../data/1978/teams";
 import * as assert from "node:assert";
-import {CarTemplate, GameDriver, Team} from "../logic/types";
+import {CarInstance, CarTemplate, GameDriver, GameTeam, Team} from "../logic/types";
 import {getTeamById} from "./gameHelpers";
 import {cars1978} from "../data/1978";
 
@@ -127,3 +127,28 @@ test("startGame initializes correctly", () => {
 
     // TODO match drivers with teams
 });
+
+export const testCarRecord = (teams: GameTeam[], carRecord: Record<string, CarInstance>) => {
+    // List out what you expect versus what you actually got
+    const expectedIds = teams
+        .flatMap(team => team.cars.map(c => c.id))
+        .sort();
+    const actualIds = Object.keys(carRecord).sort();
+
+    testLog(`Expected car IDs: ${expectedIds.join(", ")}`);
+    testLog(`Actual   car IDs: ${actualIds.join(", ")}`);
+
+// Spot any missing or extra
+    const missing = expectedIds.filter(id => !actualIds.includes(id));
+    const extras  = actualIds.filter(id => !expectedIds.includes(id));
+
+    if (missing.length) {
+        testLog(`❌ Missing cars: ${missing.join(", ")}`);
+    }
+    if (extras.length) {
+        testLog(`❌ Extra   cars: ${extras.join(", ")}`);
+    }
+    if (!missing.length && !extras.length) {
+        testLog("✅ All cars correctly present in carRecord");
+    }
+}

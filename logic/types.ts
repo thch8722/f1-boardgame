@@ -49,11 +49,6 @@ export type CarInstance = {
 };
 
 // Driver stuff:
-export type GameDriver = Driver & {
-    isNPC: boolean;
-    Player: string;     // TODO a Player is a real person/user
-};
-
 export type DriverAttribute =
     | "mechanicalFeel"  // 1-5
     | "speed"           // 1-5
@@ -71,17 +66,24 @@ export type DriverTrait =
 
 export type DriverAttributes = Record<DriverAttribute, number>;
 
-export type Driver = {
+export type DriverRaw = {
     id: string;
     name: string;
     attributes: DriverAttributes;
-    car: string | CarInstance;    // matches id of car
+    car: string;           // just the car ID here
     team: string;
-    homeTrackId?: string; // optional
+    homeTrackId?: string;
     carNumber: number;
     traits: DriverTrait[];
     championshipPoints?: number;
 };
+
+export type GameDriver = Omit<DriverRaw, "car"> & {
+    car: CarInstance;      // now the full object
+    isNPC: boolean;
+    player?: string;       // lowercase for consistency
+};
+
 
 // tracks stuff:
 export type FinishStatus = "finished" | "retired" | "disqualified";

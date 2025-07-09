@@ -1,6 +1,7 @@
 import {GameDriver, Phase} from "../logic/types";
 import {testLog} from "./game.test";
 import {getChampionshipPoints} from "../logic/carLogic";
+import {setUpCar} from "../logic/setUpHelper";
 
 
 export const phaseRun = (phase: Phase, raceStandings: GameDriver[]): GameDriver[] => {
@@ -34,7 +35,7 @@ export const runBuildUp = (phase: Phase, raceStandings: GameDriver[]): GameDrive
 export const runSetUp = (phase: Phase, raceStandings: GameDriver[]) => {
     testLog("------- Setup phase -------");
     for (const driver of raceStandings) {
-
+        setUpCar(driver, "handling");
     }
 }
 

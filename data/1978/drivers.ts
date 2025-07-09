@@ -1,6 +1,6 @@
-import {Driver} from "../../logic/types";
+import {GameDriver, DriverRaw} from "../../logic/types";
 
-export const drivers1978: Driver[] = [
+export const drivers1978: DriverRaw[] = [
     {
         id: "niki_lauda",
         name: "Niki Lauda",
@@ -27,7 +27,7 @@ export const drivers1978: Driver[] = [
             adaptability: 6     // +3
         },
         team: "brabham",
-        car: "brabham_bt46b_2",
+        car: "brabham_bt46_2",
         homeTrackId: "british_gp",
         carNumber: 2,
         traits: []
@@ -42,7 +42,7 @@ export const drivers1978: Driver[] = [
             racecraft: 6,       // +2
             adaptability: 5     // +1
         },team: "tyrrell",
-        car: "tyrrell_008_4",
+        car: "tyrrell_008_1",
         homeTrackId: "french_gp",
         carNumber: 3,
         traits: []
@@ -58,7 +58,7 @@ export const drivers1978: Driver[] = [
             adaptability: 7     // +3
         },
         team: "tyrrell",
-        car: "tyrrell_008_3",
+        car: "tyrrell_008_2",
         homeTrackId: "french_gp",
         carNumber: 4,
         traits: []
@@ -74,7 +74,7 @@ export const drivers1978: Driver[] = [
             adaptability: 7     // +3
         },
         team: "lotus",
-        car: "lotus_79_5",   // Example chassis
+        car: "lotus_79_1",   // Example chassis
         homeTrackId: "us_gp_east",
         carNumber: 5,
         traits: ["Cool and calm"]
@@ -90,7 +90,7 @@ export const drivers1978: Driver[] = [
             adaptability: 5     // good but not a chameleon
         },
         team: "lotus",
-        car: "lotus_79_6",
+        car: "lotus_78_1",
         homeTrackId: "swedish_gp",
         carNumber: 6,
         traits: ["Unpredictable"]
@@ -106,7 +106,7 @@ export const drivers1978: Driver[] = [
             adaptability: 6     // decent at adjusting to conditions
         },
         team: "mclaren",
-        car: "mclaren_m26_7",
+        car: "mclaren_m26_1",
         homeTrackId: "british_gp",
         carNumber: 7,
         traits: ["Showman"]
@@ -122,7 +122,7 @@ export const drivers1978: Driver[] = [
             adaptability: 3     // difficulty adapting to changing conditions or setup
         },
         team: "mclaren",
-        car: "mclaren_m26b_8",
+        car: "mclaren_m26_2",
         homeTrackId: "french_gp",
         carNumber: 8,
         traits: []
@@ -138,7 +138,7 @@ export const drivers1978: Driver[] = [
             adaptability: 5     // adjusts well to different conditions
         },
         team: "ferrari",
-        car: "ferrari_312t3_11",
+        car: "ferrari_312t3_1",
         homeTrackId: "italian_gp",
         carNumber: 11,
         traits: ["Cool and calm"]
@@ -154,7 +154,7 @@ export const drivers1978: Driver[] = [
             adaptability: 5     // sometimes struggles with changing conditions
         },
         team: "ferrari",
-        car: "ferrari_312t3_12",
+        car: "ferrari_312t3_2",
         homeTrackId: "canadian_gp",
         carNumber: 12,
         traits: ["Aggressive", "Rookie"]
@@ -170,7 +170,7 @@ export const drivers1978: Driver[] = [
             adaptability: 6     // handles changing conditions well
         },
         team: "wolf",
-        car: "wolf_wr7_11",
+        car: "wolf_wr6_1",
         homeTrackId: "south_african_gp",
         carNumber: 20,
         traits: ["Cool and calm"]
@@ -186,7 +186,7 @@ export const drivers1978: Driver[] = [
             adaptability: 6      // handles different conditions well
         },
         team: "ligier",
-        car: "ligier_js7_8",
+        car: "ligier_js7_1",
         homeTrackId: "monaco_gp",
         carNumber: 26,
         traits: []
@@ -202,7 +202,7 @@ export const drivers1978: Driver[] = [
             adaptability: 5      // handles new tech well
         },
         team: "renault",
-        car: "renault_rs01_15",
+        car: "renault_rs01_1",
         homeTrackId: "french_gp",
         carNumber: 15,
         traits: []
@@ -218,7 +218,7 @@ export const drivers1978: Driver[] = [
             adaptability: 4
         },
         team: "ensign",
-        car: "ensign_n177_24",
+        car: "ensign_n177_1",
         homeTrackId: "british_gp",
         carNumber: 22,
         traits: ["Rookie"]
@@ -234,7 +234,7 @@ export const drivers1978: Driver[] = [
             adaptability: 1     // poor at adjusting to conditions
         },
         team: "surtees",
-        car: "surtees_ts19_19",
+        car: "surtees_ts19_1",
         homeTrackId: "italian_gp",
         carNumber: 19,
         traits: ["Rookie"]
@@ -250,7 +250,7 @@ export const drivers1978: Driver[] = [
             adaptability: 2     // learning to cope with changes
         },
         team: "arrows",
-        car: "arrows_a1_35",
+        car: "arrows_a1_1",
         homeTrackId: "italian_gp",
         carNumber: 35,
         traits: ["Rookie"]
@@ -265,7 +265,7 @@ export const drivers1978: Driver[] = [
             racecraft: 5,       // solid but no longer flawless
             adaptability: 5     // able to handle different conditions well
         },team: "fittipaldi",
-        car: "fittipaldi_1",
+        car: "fittipaldi_f4a_1",
         homeTrackId: "brazilian_gp",
         carNumber: 14,
         traits: ["Cool and calm"]
@@ -280,7 +280,7 @@ export const drivers1978: Driver[] = [
             racecraft: 6,       // good overtaking and race instincts
             adaptability: 5     // decent at adjusting to changing conditions
         },team: "williams",
-        car: "williams_fw06_27",
+        car: "williams_fw06_1",
         homeTrackId: "british_gp",
         carNumber: 27,
         traits: ["Rookie"]
@@ -296,7 +296,7 @@ export const drivers1978: Driver[] = [
             adaptability: 5     // decent adapting to changing conditions
         },
         team: "shadow",
-        car: "shadow_dn8_17",
+        car: "shadow_dn8_1",
         homeTrackId: "austrian_gp",
         carNumber: 17,
         traits: []
@@ -311,7 +311,7 @@ export const drivers1978: Driver[] = [
             racecraft: 3,       // not always sharp in wheel-to-wheel battles
             adaptability: 3     // slow to adjust to changing conditions
         },team: "shadow",
-        car: "shadow_dn8_16",
+        car: "shadow_dn8_1",
         homeTrackId: "german_gp",
         carNumber: 16,
         traits: []
@@ -326,7 +326,7 @@ export const drivers1978: Driver[] = [
             racecraft: 3,       // limited overtaking and defensive skills
             adaptability: 3     // slow to react to changing conditions or setups
         },team: "rebaque",
-        car: "lotus_77_25",
+        car: "lotus_77_1",
         homeTrackId: "british_gp",
         carNumber: 25,
         traits: []

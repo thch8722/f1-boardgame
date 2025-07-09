@@ -1,16 +1,10 @@
 import {
-    AttributeModifier,
-    CarInstance,
-    CarTemplate,
-    Driver,
-    GameDriver,
     GameTeam,
-    RaceCard,
-    Team
+    RaceCard
 } from "../logic/types";
 import {drivers1978} from "../data/1978/drivers";
 import {
-    assignNpcDriversToCars,
+    assignNpcDriversToCars, buildCarRecord,
     createGameDrivers,
     createGameTeams, createGameTracks,
     getCarTemplateById,
@@ -22,19 +16,21 @@ import {tracks1978} from "../data/1978/tracks";
 import {buildEventDeck, buildIncidentDeck, buildRaceCardDeck, CardDeck} from "../logic/cards";
 import {buildRacePhases} from "../data/phases/phases";
 import {phaseRun} from "./phaseRun";
+import {testLog} from "./game.test";
 
 // Start game
 
 export const startGame = () => {
-    const drivers = createGameDrivers(drivers1978); // Initial array, sorted by numbers
+    const teams: GameTeam[] = createGameTeams(teams1978);
+    const carRecord = buildCarRecord(teams);
+
+    const drivers = createGameDrivers(drivers1978, carRecord); // Initial array, sorted by numbers
 
     const seasonStandings = [... drivers];    // drivers by current race standings
 
     let raceStandings = [...drivers];
 
-    const teams: GameTeam[] = createGameTeams(teams1978);
-
-    assignNpcDriversToCars(drivers, teams);
+    //assignNpcDriversToCars(drivers, carRecord);
     const tracks = createGameTracks(tracks1978);
     const eventCards = buildEventDeck();
     const incidentCards = buildIncidentDeck();
