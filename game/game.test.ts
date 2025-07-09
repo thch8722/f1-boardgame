@@ -27,7 +27,7 @@ const modelComponents = (carTemplate: CarTemplate) => {
     + carTemplate.components.engine;
 }
 
-const testLog = (content: string) => {
+export const testLog = (content: string) => {
     process.stdout.write(content + '\n');
 }
 

@@ -1,9 +1,17 @@
 import {GameDriver, Phase} from "../logic/types";
+import {testLog} from "./game.test";
+import {getChampionshipPoints} from "../logic/carLogic";
 
 
 export const phaseRun = (phase: Phase, raceStandings: GameDriver[]): GameDriver[] => {
 
     const updatedRaceStandings: GameDriver[] = [];
+    if (phase.type === "BUILDUP") {
+        const standingsAfterBuildUp = runBuildUp(phase, raceStandings);
+        return standingsAfterBuildUp;
+    } else if (phase.type === "SETUP") {
+        const standingsAfterSetup = runSetUp(phase, raceStandings);
+    }
     // Show standings
     // draw race card
     // for each driver from top to bottom:
@@ -13,7 +21,22 @@ export const phaseRun = (phase: Phase, raceStandings: GameDriver[]): GameDriver[
     return updatedRaceStandings;
 }
 
-export const runBuildUp = () => {}
+export const runBuildUp = (phase: Phase, raceStandings: GameDriver[]): GameDriver[] => {
+    testLog("------- Build up phase -------");
+    testLog("Championship standings:");
+    let position = 0;
+    for (const driver of raceStandings) {
+        testLog((++position) + " " + driver.name + " (" + driver.carNumber + ") " + driver.team + " " + getChampionshipPoints(driver) + "pts");
+    }
+    return raceStandings;
+}
+
+export const runSetUp = (phase: Phase, raceStandings: GameDriver[]) => {
+    testLog("------- Setup phase -------");
+    for (const driver of raceStandings) {
+
+    }
+}
 
 /*
 

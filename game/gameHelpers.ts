@@ -82,7 +82,7 @@ export function assignNpcDriversToCars(drivers: GameDriver[], teams: GameTeam[])
             const car = team.cars[i];
             if (car) {
                 car.driverId = driver.id;
-                driver.car = car.id;
+                driver.car = car;
             }
         }
     }

@@ -1,6 +1,6 @@
 
 
-import {CarInstance, CarAttribute, CarComponent} from "./types";
+import {CarInstance, CarAttribute, CarComponent, GameDriver} from "./types";
 
 export function getCurrentAttributes(car: CarInstance): Record<CarAttribute, number> {
     const base = car.baseCar.attributes;
@@ -21,6 +21,10 @@ export function getCurrentAttributes(car: CarInstance): Record<CarAttribute, num
 
 export function getCurrentComponents(car: CarInstance): Record<CarComponent, number> {
     return car.components;
+}
+
+export function getChampionshipPoints(driver: GameDriver) {
+    return driver.championshipPoints || 0;
 }
 
 const clampMin = (value: number, min: number = 1): number => Math.max(value, min);

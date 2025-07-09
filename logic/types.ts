@@ -75,11 +75,12 @@ export type Driver = {
     id: string;
     name: string;
     attributes: DriverAttributes;
-    car: string;    // matches id of car
+    car: string | CarInstance;    // matches id of car
     team: string;
     homeTrackId?: string; // optional
     carNumber: number;
     traits: DriverTrait[];
+    championshipPoints?: number;
 };
 
 // tracks stuff:
@@ -234,6 +235,16 @@ export interface Phase {
     isRacePhase?: boolean;       // Quick flag for race loop
     specialEffects?: string[];   // Narrative or mechanical hooks (e.g., "driverFatigue")
 }
+
+// setup focus for player
+export type SetupFocus =
+    | "rain"
+    | "qualification"
+    | "lateSprint"
+    | "handling"
+    | "topSpeed"
+    | "reliability"
+    | "wheelToWheel";
 
 
 

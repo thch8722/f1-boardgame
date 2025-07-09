@@ -63,21 +63,11 @@ export const startGame = () => {
 
 // TODO
 /*
+Add championship points to players
+Better looking championship table (maybe a function)
+Setup Cars
+IO hooks to wait for or accept player input
 
-attribut 1-7 (4 === 0)              - CHK
-d12 dice OR d6 + d6                 - CHK
-Github                              - CHK
----- start 1st phase
-
-
-faktor för attributstackning så det i princip blir
-d12 + attribut
-eller
-d12 + (attribut/2) + (attribut/2)
-
-
-setup
-quali
 
 
 
