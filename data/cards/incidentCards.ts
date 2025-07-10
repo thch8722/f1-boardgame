@@ -54,6 +54,6 @@ export const incidentCardTemplates: IncidentCardTemplate[] = [
         effect: "crash",
         name: "Crash!!!",
         description: "End of race - add component damage",
-        count: 2,
+        count: 1,
     },
 ];

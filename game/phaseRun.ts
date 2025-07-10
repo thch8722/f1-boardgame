@@ -15,6 +15,7 @@ export const phaseRun = (phase: Phase, raceStandings: GameDriver[]): GameDriver[
     }
     // Show standings
     // draw race card
+    // TODO - if race card says so rollTrackCondition()
     // for each driver from top to bottom:
     // draw eventCard
     // drive phase distance
@@ -35,7 +36,7 @@ export const runBuildUp = (phase: Phase, raceStandings: GameDriver[]): GameDrive
 export const runSetUp = (phase: Phase, raceStandings: GameDriver[]) => {
     testLog("------- Setup phase -------");
     for (const driver of raceStandings) {
-        setUpCar(driver, "handling");
+        setUpCar(driver, ["handling", "rain", "reliability"]);
     }
 }
 

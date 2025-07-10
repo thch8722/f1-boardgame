@@ -1,6 +1,7 @@
 
 
-import {CarInstance, CarAttribute, CarComponent, GameDriver} from "./types";
+import {CarInstance, CarAttribute, CarComponent, GameDriver, CarTemplate} from "./types";
+import {getAttributeMod} from "./rollLogic";
 
 export function getCurrentAttributes(car: CarInstance): Record<CarAttribute, number> {
     const base = car.baseCar.attributes;
@@ -26,5 +27,13 @@ export function getCurrentComponents(car: CarInstance): Record<CarComponent, num
 export function getChampionshipPoints(driver: GameDriver) {
     return driver.championshipPoints || 0;
 }
+
+export const getCarAttributeMod = (
+    car: CarInstance,
+    attr: CarAttribute
+): number => {
+    return getAttributeMod(car.baseCar.attributes[attr]);
+};
+
 
 const clampMin = (value: number, min: number = 1): number => Math.max(value, min);

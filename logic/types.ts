@@ -24,6 +24,14 @@ export type AttributeModifier = {
     description?: string;
 };
 
+export type ComponentHPModifier = {
+    source: AttributeModifierSource; // 'setup' | 'damage' | 'wear' etc
+    mod: Partial<CarComponents>;     // e.g. { engine: -1, tyres: +1 }
+    condition?: AttributeModifierCondition | AttributeModifierCondition[];
+    description?: string;
+};
+
+
 // Static car definition
 export type CarTemplate = {
     id: string;
@@ -46,6 +54,7 @@ export type CarInstance = {
     status: {
         incidents: string[];
     };
+    componentHPModifiers: ComponentHPModifier[]; // ← new
 };
 
 // Driver stuff:

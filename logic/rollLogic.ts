@@ -1,6 +1,4 @@
-
-
-// main dices:
+import { TrackCondition, TrackConditionChances } from "../logic/types";
 import {CURRENT_DICE_METHOD} from "../game/constants";
 
 const rollD12 = (): number => {
@@ -20,8 +18,7 @@ export const rollDice = (): number => {
     }
 }
 
-import { TrackCondition, TrackConditionChances } from "../logic/types";
-
+// TODO
 export const rollTrackCondition = (chances: TrackConditionChances): TrackCondition => {
     const roll = Math.floor(Math.random() * 100) + 1;
     let sum = 0;
@@ -35,3 +32,24 @@ export const rollTrackCondition = (chances: TrackConditionChances): TrackConditi
     // fallback, shouldn't happen if chances add up to 100
     throw new Error("Invalid TrackConditionChances: total does not sum to 100");
 };
+
+export const getAttributeMod = (value: number) => value - 4;
+
+export type ThresholdResult<T> = {
+    threshold: number;
+    result: T;
+};
+
+export function evaluateThresholds<T>(
+    total: number,
+    thresholds: ThresholdResult<T>[],
+    defaultResult: T
+): T {
+    for (const { threshold, result } of thresholds) {
+        if (total >= threshold) {
+            return result;
+        }
+    }
+    return defaultResult;
+}
+

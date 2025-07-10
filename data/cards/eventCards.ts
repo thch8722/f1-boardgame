@@ -32,4 +32,5 @@ export const eventCardTemplates: EventCardTemplate[] = [
         description: "Service/setup effect without pit stop.",
         count: 1,
     },
+    // TODO add Unprovoced ERROR no gain
 ];

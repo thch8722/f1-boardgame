@@ -66,6 +66,7 @@ export function createGameTeams(teams: Team[]): GameTeam[] {
                 status: {
                     incidents: [],
                 },
+                componentHPModifiers: []
             };
 
             team.cars.push(carInstance);
