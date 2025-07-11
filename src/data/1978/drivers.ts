@@ -11,7 +11,7 @@ export const drivers1978: DriverRaw[] = [
             racecraft: 6,
             adaptability: 7 },
         team: "brabham",
-        car: "brabham_bt46b_1",
+        car: "brabham_bt46_1",
         homeTrackId: "german_gp",
         carNumber: 1,
         traits: ["Cool and calm"]

@@ -1,18 +1,20 @@
 import { io } from "../io/terminal/io";
 import { Phase } from "../logic/types"; // adjust if needed
-import { GameDriver } from "../logic/types"; // adjust if needed
+import { GameDriver } from "../logic/types";
+import {GameState} from "../game/gameState";
+import {phaseRunner} from "../game/phaseRunner"; // adjust if needed
 
 // main loop:
 
-type PhaseRunner = (phase: Phase, standings: GameDriver[]) => GameDriver[];
+type PhaseRunner = (phase: Phase, gameState: GameState) => GameDriver[];
 
 export const racePhasesLoop = async (
-    phases: Phase[],
-    initialStandings: GameDriver[],
-    phaseRun: PhaseRunner
+    gameState: GameState
 ) => {
+    const phases = gameState.phases;
+
     let currentPhaseIndex = 0;
-    let raceStandings = [...initialStandings]; // keep it pure
+    let raceStandings = [...gameState.raceStandings]; // keep it pure
 
     io.print("Welcome to 1978 F1 Game!");
     io.print(
@@ -40,7 +42,7 @@ export const racePhasesLoop = async (
 
             const phase = phases[currentPhaseIndex];
             io.print(`Running phase ${currentPhaseIndex + 1}: ${phase.name}`);
-            raceStandings = phaseRun(phase, raceStandings);
+            gameState = phaseRunner(phase, gameState);
             currentPhaseIndex++;
         } else {
             io.print('Unknown command. Use "next", "status", or "exit".');

@@ -70,7 +70,23 @@ function buildCardsFromTemplates<T extends { effect: string; name: string; descr
 }
 
  */
+function buildCardsFromTemplates<
+    T extends { effect: any; name: string; description: string; count: number },
+    R extends Omit<T, "count"> & { id: string; type: Card["type"] }
+>(templates: T[], type: Card["type"]): R[] {
+    return templates.flatMap(template =>
+        Array.from({ length: template.count }, () => {
+            const { count, ...cardData } = template;
+            return {
+                id: uuidv4(),
+                type,  // ✅ add this line!
+                ...cardData,
+            } as R;
+        })
+    );
+}
 
+/*
 function buildCardsFromTemplates<
     T extends { effect: any; name: string; description: string; count: number },
     R extends Omit<T, "count"> & { id: string }
@@ -86,21 +102,32 @@ function buildCardsFromTemplates<
     );
 }
 
+ */
+
 
 // Build Incident Deck:
 export function buildIncidentDeck(): CardDeck<IncidentCard> {
-    const incidentCards = buildCardsFromTemplates<typeof incidentCardTemplates[number], IncidentCard>(incidentCardTemplates);
+    const incidentCards = buildCardsFromTemplates<typeof incidentCardTemplates[number], IncidentCard>(
+        incidentCardTemplates,
+        "INCIDENT_CARD",
+        );
     return new CardDeck(incidentCards);
 }
 
 // build event card deck:
 export function buildEventDeck(): CardDeck<EventCard> {
-    const eventCards = buildCardsFromTemplates<typeof eventCardTemplates[number], EventCard>(eventCardTemplates);
+    const eventCards = buildCardsFromTemplates<typeof eventCardTemplates[number], EventCard>(
+        eventCardTemplates,
+        "EVENT_CARD",
+    );
     return new CardDeck(eventCards);
 }
 
 // build race card deck:
 export function buildRaceCardDeck(): CardDeck<RaceCard> {
-    const raceCards = buildCardsFromTemplates<typeof raceCardTemplates[number], RaceCard>(raceCardTemplates);
+    const raceCards = buildCardsFromTemplates<typeof raceCardTemplates[number], RaceCard>(
+        raceCardTemplates,
+        "RACE_CARD"
+    );
     return new CardDeck(raceCards);
 }
