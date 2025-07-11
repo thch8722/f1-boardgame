@@ -1,7 +1,7 @@
 import {startGame} from "./game";
 import {CarInstance, CarTemplate, GameDriver, GameTeam, Team} from "../logic/types";
 import {cars1978} from "../data/1978";
-import {testLog} from "../helpers";
+import {testLog} from "../../helpers";
 
 
 const driverAttributeSum = (driver: GameDriver) => {

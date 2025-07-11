@@ -2,7 +2,8 @@ import {AttributeModifier, ComponentHPModifier, GameDriver, SetupFocus} from "./
 import {evaluateThresholds, rollDice, ThresholdResult} from "./rollLogic";
 import {getCarAttributeMod} from "./carLogic";
 import {getDriverAttributeMod} from "./driverLogic";
-import {testLog} from "../helpers";
+import {io} from "../io/terminal/io";
+
 
 
 
@@ -104,7 +105,7 @@ export const setUpCar = (
     flow: boolean = false,
     risk: boolean = false
 ) => {
-    testLog("Driver " + driver.name + " setting up");
+    io.print("Driver " + driver.name + " setting up");
     const roll = rollDice();
     const driverMod = getDriverAttributeMod(driver, "mechanicalFeel");
     const carMod = getCarAttributeMod(driver.car, "setupEase");
@@ -113,7 +114,7 @@ export const setUpCar = (
     if (flow) rollTotal += 1;
     if (risk) rollTotal += 1;
 
-    testLog("Roll total " + rollTotal);
+    io.print("Roll total " + rollTotal);
 
     // collect all new modifiers here:
     const newModifiers: AttributeModifier[] = [];
@@ -130,14 +131,20 @@ export const setUpCar = (
             case "topSpeed":
                 newModifiers.push({
                     source: "setup",
-                    mod: { speed: bonus },
+                    mod: {
+                        speed: bonus,
+                        handling: bonus > 1 ? -1: 0     // very good speed boost comes with a tradeoff
+                    },
                 });
                 break;
 
             case "handling":
                 newModifiers.push({
                     source: "setup",
-                    mod: { handling: bonus },
+                    mod: {
+                        handling: bonus,
+                        speed: bonus > 1 ? -1: 0
+                    },
                 });
                 break;
 
@@ -168,7 +175,7 @@ export const setUpCar = (
                     source: "setup",
                     mod: { speed: bonus },
                     condition: "qualification",
-                    description: "Qual setup boost",
+                    description: "Qualification setup boost",
                 });
                 break;
 
@@ -193,7 +200,7 @@ export const setUpCar = (
             case "rain":
                 newModifiers.push({
                     source: "setup",
-                    mod: { handling: bonus + 1 },
+                    mod: { handling: bonus },
                     condition: "wet",
                     description: "Rain setup boost",
                 });
@@ -208,24 +215,24 @@ export const setUpCar = (
 
 
     // test output
-    testLog(`Applied ${newModifiers.length} car mods:`);
+    io.print(`Applied ${newModifiers.length} car mods:`);
 
     for (const mod of newModifiers) {
-        testLog(
+        io.print(
             `  - Source: ${mod.source}` +
             (mod.condition ? ` [Condition: ${mod.condition}]` : ``)
         );
         for (const [key, value] of Object.entries(mod.mod)) {
-            testLog(`    → ${key}: +${value}`);
+            io.print(`    → ${key}: +${value}`);
         }
     }
 
-    testLog(`Applied ${newComponentMods.length} component mods:`);
+    io.print(`Applied ${newComponentMods.length} component mods:`);
 
     for (const mod of newComponentMods) {
-        testLog(`  - Source: ${mod.source}`);
+        io.print(`  - Source: ${mod.source}`);
         for (const [key, value] of Object.entries(mod.mod)) {
-            testLog(`    → ${key}: +${value} HP`);
+            io.print(`    → ${key}: +${value} HP`);
         }
     }
 

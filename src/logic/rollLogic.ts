@@ -1,4 +1,4 @@
-import {AttributeModifierCondition, TrackCondition, TrackConditionChances} from "../logic/types";
+import {AttributeModifierCondition, TrackCondition, TrackConditionChances} from "./types";
 import {CURRENT_DICE_METHOD} from "../game/constants";
 
 const rollD12 = (): number => {
