@@ -1,24 +1,6 @@
+import {CarInstance, CarAttribute, CarComponent, GameDriver, CarTemplate, AttributeModifierCondition} from "./types";
+import {getAttributeMod, isConditionMet} from "./rollLogic";
 
-
-import {CarInstance, CarAttribute, CarComponent, GameDriver, CarTemplate} from "./types";
-import {getAttributeMod} from "./rollLogic";
-
-export function getCurrentAttributes(car: CarInstance): Record<CarAttribute, number> {
-    const base = car.baseCar.attributes;
-    const totalMods = { speed: 0, handling: 0, setupEase: 0 };
-
-    for (const mod of car.modifiers) {
-        for (const key of Object.keys(mod.mod) as CarAttribute[]) {
-            totalMods[key] += mod.mod[key] ?? 0;
-        }
-    }
-
-    return {
-        speed: clampMin(base.speed + totalMods.speed),
-        handling: clampMin(base.handling + totalMods.handling),
-        setupEase: clampMin(base.setupEase + totalMods.setupEase)
-    };
-}
 
 export function getCurrentComponents(car: CarInstance): Record<CarComponent, number> {
     return car.components;
@@ -28,11 +10,31 @@ export function getChampionshipPoints(driver: GameDriver) {
     return driver.championshipPoints || 0;
 }
 
+// attributes AS THEY ARE NOW. Define the attributes U want to include in mod, define context/conditions
 export const getCarAttributeMod = (
     car: CarInstance,
-    attr: CarAttribute
+    attr: CarAttribute | CarAttribute[],
+    context: AttributeModifierCondition[] = []
 ): number => {
-    return getAttributeMod(car.baseCar.attributes[attr]);
+    const attrs = Array.isArray(attr) ? attr : [attr];
+    let modSum = 0;
+
+    for (const attribute of attrs) {
+        const base = getAttributeMod(car.baseCar.attributes[attribute]);
+        let mods = 0;
+
+        for (const m of car.modifiers) {
+            if (m.mod[attribute] !== undefined) {
+                if (!m.condition || isConditionMet(m.condition, context)) {
+                    mods += getAttributeMod(m.mod[attribute]!);
+                }
+            }
+        }
+
+        modSum += base + mods;
+    }
+
+    return modSum;
 };
 
 

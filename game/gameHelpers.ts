@@ -9,7 +9,6 @@ import {
     Track
 } from "../logic/types";
 import {cars1978} from "../data/1978";
-import {testLog} from "./game.test";
 
 
 export function createGameDrivers(

@@ -209,6 +209,7 @@ export type IncidentEffect =
     | "crash"           // this is insane, but it happens
 
 export type TrackCondition = "hot" | "cold" | "wet" | "dry" | "dust"  // the last one is for cards
+//export type TrackCondition = "dry" | "wet" | "hot" | "cold" | "dust" | "variable";
 
 export type TrackConditionChances = {
     rain: number;       // 0–100

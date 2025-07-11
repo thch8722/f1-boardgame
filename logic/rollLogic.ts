@@ -1,4 +1,4 @@
-import { TrackCondition, TrackConditionChances } from "../logic/types";
+import {AttributeModifierCondition, TrackCondition, TrackConditionChances} from "../logic/types";
 import {CURRENT_DICE_METHOD} from "../game/constants";
 
 const rollD12 = (): number => {
@@ -51,5 +51,18 @@ export function evaluateThresholds<T>(
         }
     }
     return defaultResult;
+}
+
+export function isConditionMet(
+    modifierCondition: AttributeModifierCondition | AttributeModifierCondition[],
+    currentContext: AttributeModifierCondition[]
+): boolean {
+    if (Array.isArray(modifierCondition)) {
+        // Check if all conditions are present in current context
+        return modifierCondition.every(cond => currentContext.includes(cond));
+    } else {
+        // Single condition case
+        return currentContext.includes(modifierCondition);
+    }
 }
 

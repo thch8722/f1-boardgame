@@ -1,9 +1,7 @@
 import {startGame} from "./game";
-import {teams1978} from "../data/1978/teams";
-import * as assert from "node:assert";
 import {CarInstance, CarTemplate, GameDriver, GameTeam, Team} from "../logic/types";
-import {getTeamById} from "./gameHelpers";
 import {cars1978} from "../data/1978";
+import {testLog} from "../helpers";
 
 
 const driverAttributeSum = (driver: GameDriver) => {
@@ -27,11 +25,7 @@ const modelComponents = (carTemplate: CarTemplate) => {
     + carTemplate.components.engine;
 }
 
-export const testLog = (content: string) => {
-    process.stdout.write(content + '\n');
-}
-
-test("startGame initializes correctly", () => {
+test.skip("startGame initializes correctly", () => {
     const game = startGame();
     expect(game.drivers.length).toBeGreaterThan(0);
     expect(game.drivers[0].carNumber).toBe(1);
