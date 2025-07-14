@@ -310,7 +310,8 @@ export const drivers1978: DriverRaw[] = [
             focus: 3,           // concentration can waver under pressure
             racecraft: 3,       // not always sharp in wheel-to-wheel battles
             adaptability: 3     // slow to adjust to changing conditions
-        },team: "shadow",
+        },
+        team: "shadow",
         car: "shadow_dn8_1",
         homeTrackId: "german_gp",
         carNumber: 16,

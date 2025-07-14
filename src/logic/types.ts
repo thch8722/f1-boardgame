@@ -91,6 +91,10 @@ export type GameDriver = Omit<DriverRaw, "car"> & {
     car: CarInstance;      // now the full object
     isNPC: boolean;
     player?: string;       // lowercase for consistency
+
+    // this applies for current race:
+    totalDistance?: number;  // summed from laps
+    latestLap?: Lap;               // last lap pace
 };
 
 
@@ -161,6 +165,14 @@ export type Track = {
     overtakingZones: OvertakingZone[];
     modifiers?: TrackModifier[];
     eventDate: string;
+
+    // BEHOLD record holder
+    recordLapTime?: Lap; // optional, if not set yet
+    recordDriverName?: string; // who set it
+
+    // for calculating lap times:
+    baseLapTime: number;
+    lapTimeFactor: number; // one factor for both
 };
 
 // team:
@@ -257,6 +269,27 @@ export type SetupFocus =
     | "topSpeed"
     | "reliability"
     | "wheelToWheel";
+
+
+// Session and laps:
+export type Lap = {
+    rollTotal: number;
+    pace: number;
+    roll: number;
+    risk: number;
+    flow: number;
+    lapTime?: string;
+    driverId?: string;
+    hasIncident: boolean;
+};
+
+export type Session = {
+    trackId: string;     // e.g. 'buenos_aires'
+    type: 'qualifying' | 'race' | 'practice';
+    laps: Record<string, Lap[]>; // keyed by driverId
+};
+
+//
 
 
 
