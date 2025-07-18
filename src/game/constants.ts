@@ -9,3 +9,5 @@ export type DiceMethod = typeof DICE_METHODS[keyof typeof DICE_METHODS];
 
 // Set the actual method in use here:
 export const CURRENT_DICE_METHOD: DiceMethod = DICE_METHODS.TWO_D6;
+
+export const DEBUG = false;

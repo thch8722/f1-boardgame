@@ -5,11 +5,22 @@ import {io} from "../io/terminal/io";
 import {GameState} from "./gameState";
 import {driveQualificationLap, sortRaceStandings} from "../logic/raceLogic";
 import {getTeamById} from "./gameHelpers";
+import {rollTrackCondition} from "../logic/rollLogic";
 
 
 export const phaseRunner = (phase: Phase, gameState: GameState): GameState => {
     io.print("-------" + phase.name + "-------");
     const updatedRaceStandings: GameDriver[] = [];
+    const raceCard = gameState.raceCards.draw();
+    io.print(`Race Card drawn: ${raceCard.name} — ${raceCard.description}`);
+
+    if (raceCard.effect.type === "trackConditionChange") {
+        // TODO roll weather change and create Track condition'
+        // const newCondition = rollTrackCondition(gameState.track.attributes);
+    } else {
+        // TODO create Phase Effect
+    }
+    // Present conditions for phase for players
     if (phase.type === "BUILDUP") {
         const standingsAfterBuildUp = runBuildUp(phase, gameState);
         return standingsAfterBuildUp;

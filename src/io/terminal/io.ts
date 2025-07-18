@@ -2,6 +2,7 @@
 
 // io.ts
 import readline from 'readline';
+import {DEBUG} from "../../game/constants";
 
 class IO {
     private rl: readline.Interface;
@@ -19,6 +20,10 @@ class IO {
 
     print(message: string) {
         console.log(message);
+    }
+
+    debug(message: string) {
+        DEBUG && this.print(message);
     }
 
     close() {

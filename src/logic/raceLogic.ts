@@ -35,7 +35,7 @@ export const driveQualificationLap = (
     }
 
     lap.lapTime = calculateAndFormatLapTime(lap,gameState.currentTrack);
-    io.print("LAP: " + JSON.stringify(lap));
+    io.debug("LAP: " + JSON.stringify(lap));
     return lap;
 };
 

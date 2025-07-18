@@ -6,7 +6,7 @@ export const cars1978: CarTemplate[] = [
         name: "Lotus 78",
         team: "Lotus",
         attributes: {
-            speed: 5,
+            speed: 6,
             handling: 5,
             setupEase: 4
         },
@@ -17,29 +17,29 @@ export const cars1978: CarTemplate[] = [
         name: "Lotus 79",
         team: "Lotus",
         attributes: {
-            speed: 5,
+            speed: 6,
             handling: 6,
             setupEase: 5
         },
-        components: { engine: 3, tyres: 2, brakes: 2, gearbox: 2 },
+        components: { engine: 3, tyres: 3, brakes: 2, gearbox: 2 },
     },
     {
         id: "brabham_bt46",
         name: "Brabham BT46",
         team: "Brabham",
         attributes: {
-            speed: 6,
+            speed: 7,
             handling: 4,
             setupEase: 4
         },
         components: { engine: 2, tyres: 3, brakes: 2, gearbox: 2 },
     },
     {
-        id: "brabham_bt46b",
+        id: "brabham_bt46b",    // fan car monster
         name: "Brabham BT46B",
         team: "Brabham",
         attributes: {
-            speed: 6,
+            speed: 7,
             handling: 7,
             setupEase: 4
         },
@@ -50,7 +50,7 @@ export const cars1978: CarTemplate[] = [
         name: "Wolf WR6",
         team: "Wolf",
         attributes: {
-            speed: 4,
+            speed: 5,
             handling: 4,
             setupEase: 5
         },
@@ -60,7 +60,7 @@ export const cars1978: CarTemplate[] = [
         id: "mclaren_m26",
         name: "McLaren M26",
         team: "McLaren",
-        attributes: { speed: 4, handling: 4, setupEase: 3 },
+        attributes: { speed: 5, handling: 4, setupEase: 3 },
         components: { engine: 3, tyres: 3, brakes: 2, gearbox: 2 },
     },
     {
@@ -68,7 +68,7 @@ export const cars1978: CarTemplate[] = [
         name: "McLaren M26B",
         team: "McLaren",
         attributes: {
-            speed: 5,
+            speed: 6,
             handling: 4,
             setupEase: 4
         },
@@ -79,7 +79,7 @@ export const cars1978: CarTemplate[] = [
         name: "Tyrrell 008",
         team: "Tyrrell",
         attributes: {
-            speed: 3,
+            speed: 4,
             handling: 5,
             setupEase: 4
         },
@@ -97,7 +97,7 @@ export const cars1978: CarTemplate[] = [
         name: "Renault RS01",
         team: "Renault",
         attributes: {
-            speed: 6,
+            speed: 7,
             handling: 2,
             setupEase: 2
         },
@@ -108,7 +108,7 @@ export const cars1978: CarTemplate[] = [
         name: "Ferrari 312 T3",
         team: "Ferrari",
         attributes: {
-            speed: 6,
+            speed: 7,
             handling: 4,
             setupEase: 2
         },
@@ -161,7 +161,7 @@ export const cars1978: CarTemplate[] = [
     {
         id: "williams_fw06",
         name: "Williams FW06",
-        team: "wiliams",
+        team: "williams",
         attributes: {
             speed: 3,
             handling: 4,
@@ -178,7 +178,7 @@ export const cars1978: CarTemplate[] = [
             handling: 2,
             setupEase: 2
         },
-        components: { engine: 3, tyres: 4, brakes: 2, gearbox: 2 },
+        components: { engine: 3, tyres: 3, brakes: 2, gearbox: 2 },
     },
     {
         id: "arrows_a1",

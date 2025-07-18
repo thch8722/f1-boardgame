@@ -18,7 +18,7 @@ export const rollDice = (): number => {
     }
 }
 
-// TODO
+
 export const rollTrackCondition = (chances: TrackConditionChances): TrackCondition => {
     const roll = Math.floor(Math.random() * 100) + 1;
     let sum = 0;

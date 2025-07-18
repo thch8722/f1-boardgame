@@ -59,11 +59,12 @@ export type CarInstance = {
 
 // Driver stuff:
 export type DriverAttribute =
-    | "mechanicalFeel"  // 1-5
-    | "speed"           // 1-5
-    | "focus"           // 1-5
-    | "racecraft"       // 1-5
-    | "adaptability";   // 1-5 optional use
+    | "mechanicalFeel"  // 1-7
+    | "speed"           // 1-7
+    | "focus"           // 1-7
+    | "racecraft"       // 1-7
+    | "bravery"
+    | "rainSkill"   // 1-7 optional use
 
 export type DriverTrait =
     | "Aggressive"
@@ -71,13 +72,14 @@ export type DriverTrait =
     | "Rookie"
     | "Unpredictable"
     | "Cool and calm"
-    | "Default"
+    | "Stubborn"
 
 export type DriverAttributes = Record<DriverAttribute, number>;
 
 export type DriverRaw = {
     id: string;
     name: string;
+    nickname?: string;
     attributes: DriverAttributes;
     car: string;           // just the car ID here
     team: string;
@@ -91,6 +93,7 @@ export type GameDriver = Omit<DriverRaw, "car"> & {
     car: CarInstance;      // now the full object
     isNPC: boolean;
     player?: string;       // lowercase for consistency
+    flowPoints?: number;
 
     // this applies for current race:
     totalDistance?: number;  // summed from laps
@@ -179,6 +182,7 @@ export type Track = {
 export type GameTeam = Team & {
     isNPC: boolean;
     Player: string;     // TODO a Player is a real person/user
+    servicePoints?: number;
 };
 
 export type Team = {
@@ -200,6 +204,8 @@ export type EventEffect =
     | "gainFlowPoint"     // Gain 1 flow point (used as +1 modifier on actions)
     | "rollRisk"          // Roll risk dice (might trigger an incident card)
     | "divineInsight"     // Get a setup or service effect without needing a pit stop
+    | "rollRiskNoGain"
+
 
 export interface IncidentCard extends Card {
     effect: IncidentEffect;
@@ -213,6 +219,7 @@ export interface RaceCard extends Card {
 export type IncidentEffect =
     | "spin"             // Lose time + places; also reduces qualifying potential
     | "overheat"         // Forced to defend next turn (-1 pace, +1 defend)
+    | "majorOverheat"   // forced to back of (-1 pace, no defencebonus)
     | "loseHandling"     // -1 to the car's handling attribute this round
     | "loseSpeed"        // -1 to the car's speed attribute
     | "loseComponentHP"  // Lose 1 HP on a component (e.g., brakes, engine); 0 HP is dangerous
@@ -231,11 +238,17 @@ export type TrackConditionChances = {
     dust: number;       // 0–100
 }
 
+export type PhaseEffect =
+    | { type: "yellowFlag"; "closedZone": OvertakingZone }                // close one or more overtaking zones, forced slow down
+    | { type: "oilSpill"; "closedZone": OvertakingZone }                 // close one overtakig zone and less grip/handling, increased risk
+    | { type: "noChange" };                                                 // no change in conditions
+
 export type RaceEffect =
     | { type: "track"; condition: TrackCondition }
     | { type: "trackConditionChange" }      // <-- special trigger, not a condition
     | { type: "yellowFlag" }                // close one or more overtaking zones, forced slow down
-    | { type: "oilSpill" };                 // close one overtakig zone and less grip/handling, increased risk
+    | { type: "oilSpill" }                 // close one overtakig zone and less grip/handling, increased risk
+    | { type: "noChange" };                 // no change in conditions
 
 export interface RaceCard extends Card {
     effect: RaceEffect;

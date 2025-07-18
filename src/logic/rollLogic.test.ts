@@ -1,6 +1,7 @@
 import {rollDice} from "./rollLogic";
 import {setupThresholds} from "./setUpHelper";
-import {testLog} from "../game/game.test";
+import {io} from "../io/terminal/io";
+
 
 export function testSetupDistribution(
     iterations: number,
@@ -44,7 +45,7 @@ test("distribution test", () => {
     const distribution = testSetupDistribution(iterations, driverMod, carMod);
 
     distribution.forEach(({ result, count, percent }) => {
-        testLog(`Result [${result.join(",")}] : ${count} times (${percent.toFixed(2)}%)`);
+        io.debug(`Result [${result.join(",")}] : ${count} times (${percent.toFixed(2)}%)`);
     });
 
     // Optional: Add some basic expectations, e.g. total count equals iterations

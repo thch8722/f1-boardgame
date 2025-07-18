@@ -26,5 +26,11 @@ export const raceCardTemplates: RaceCardTemplate[] = [
         name: "Oil spill",
         description: "Cars handle less well, and no overtaking in one zone. Increased risk",
         count: 2
+    },
+    {
+        effect: { type: "noChange"},
+        name: "No change",
+        description: "No race events in this phase",
+        count: 1
     }
 ]

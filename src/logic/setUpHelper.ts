@@ -105,7 +105,7 @@ export const setUpCar = (
     flow: boolean = false,
     risk: boolean = false
 ) => {
-    io.print("Driver " + driver.name + " setting up");
+
     const roll = rollDice();
     const driverMod = getDriverAttributeMod(driver, "mechanicalFeel");
     const carMod = getCarAttributeMod(driver.car, "setupEase");
@@ -113,8 +113,7 @@ export const setUpCar = (
 
     if (flow) rollTotal += 1;
     if (risk) rollTotal += 1;
-
-    io.print("Roll total " + rollTotal);
+    io.print(driver.name + " setting up : " + rollTotal);
 
     // collect all new modifiers here:
     const newModifiers: AttributeModifier[] = [];
@@ -215,24 +214,24 @@ export const setUpCar = (
 
 
     // test output
-    io.print(`Applied ${newModifiers.length} car mods:`);
+    io.debug(`Applied ${newModifiers.length} car mods:`);
 
     for (const mod of newModifiers) {
-        io.print(
+        io.debug(
             `  - Source: ${mod.source}` +
             (mod.condition ? ` [Condition: ${mod.condition}]` : ``)
         );
         for (const [key, value] of Object.entries(mod.mod)) {
-            io.print(`    → ${key}: +${value}`);
+            io.debug(`    → ${key}: +${value}`);
         }
     }
 
-    io.print(`Applied ${newComponentMods.length} component mods:`);
+    io.debug(`Applied ${newComponentMods.length} component mods:`);
 
     for (const mod of newComponentMods) {
-        io.print(`  - Source: ${mod.source}`);
+        io.debug(`  - Source: ${mod.source}`);
         for (const [key, value] of Object.entries(mod.mod)) {
-            io.print(`    → ${key}: +${value} HP`);
+            io.debug(`    → ${key}: +${value} HP`);
         }
     }
 

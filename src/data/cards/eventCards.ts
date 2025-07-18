@@ -24,7 +24,13 @@ export const eventCardTemplates: EventCardTemplate[] = [
         effect: "rollRisk",
         name: "Unprovoked Error",
         description: "Roll a risk die — anything can happen today.",
-        count: 2,
+        count: 1,
+    },
+    {
+        effect: "rollRiskNoGain",
+        name: "Unprovoked Error",
+        description: "Roll a risk die — anything can happen today.",
+        count: 1,
     },
     {
         effect: "divineInsight",

@@ -54,22 +54,6 @@ export class CardDeck<T extends Card> {
 
 
 // Helper generic to build cards from templates
-/*
-function buildCardsFromTemplates<T extends { effect: string; name: string; description: string; count: number }, R extends Omit<T, "count"> & { id: string }>(
-    templates: T[]
-): R[] {
-    return templates.flatMap(template =>
-        Array.from({ length: template.count }, () => {
-            const { count, ...cardData } = template;
-            return {
-                id: uuidv4(),
-                ...cardData,
-            } as R;
-        })
-    );
-}
-
- */
 function buildCardsFromTemplates<
     T extends { effect: any; name: string; description: string; count: number },
     R extends Omit<T, "count"> & { id: string; type: Card["type"] }
@@ -85,25 +69,6 @@ function buildCardsFromTemplates<
         })
     );
 }
-
-/*
-function buildCardsFromTemplates<
-    T extends { effect: any; name: string; description: string; count: number },
-    R extends Omit<T, "count"> & { id: string }
->(templates: T[]): R[] {
-    return templates.flatMap(template =>
-        Array.from({ length: template.count }, () => {
-            const { count, ...cardData } = template;
-            return {
-                id: uuidv4(),
-                ...cardData,
-            } as R;
-        })
-    );
-}
-
- */
-
 
 // Build Incident Deck:
 export function buildIncidentDeck(): CardDeck<IncidentCard> {
