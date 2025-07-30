@@ -7,7 +7,7 @@ import {
     Phase,
     Track,
     EventCard,
-    IncidentCard,
+    IncidentCard, PhaseEffect, TrackCondition,
 } from "../logic/types";
 import {buildCarRecord, createGameDrivers, createGameTeams, createGameTracks} from "./gameHelpers";
 import {teams1978} from "../data/1978/teams";
@@ -27,7 +27,12 @@ export interface GameState {
     eventCards: CardDeck<EventCard>;
     incidentCards: CardDeck<IncidentCard>;
     raceCards: CardDeck<RaceCard>;
+    currentRaceCard?: RaceCard;
     phases: Phase[];
+    phaseEffect?: PhaseEffect;
+
+    raceStatus: "green" | "yellow" | "red";          // overall race flag/status
+    currentCondition: TrackCondition              // active track states, e.g. ['wet', 'hot']
 }
 
 export const createInitialGameState = (): GameState => {
@@ -54,5 +59,8 @@ export const createInitialGameState = (): GameState => {
         incidentCards,
         raceCards,
         phases,
+
+        raceStatus: "green",          // race starts green
+        currentCondition: "dry",   // default track condition
     };
 };

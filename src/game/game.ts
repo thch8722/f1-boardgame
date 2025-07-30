@@ -18,13 +18,25 @@ export const interactiveGame = async () => {
 };
 // TODO
 /*
-qualification calculate speed
-Send cards, track and all into phaserun noop
-USER Setup loop
-NPC setup including personality and track conditions
+car can be setup for rain, different conditions
+lap times are off
+-Phase lap driving function:
 
+yellow flag clamped top speed
+driver penalty
 
-
-
+tyres
+driver and different conditions
+inlcluding rain, oil spill, qualification, yellow card, being early "lap" or late "lap". isRiskIncident
+-We shall drive thru all the phases with different conditions (weather and other conditions).
+-We shall implement phase effects
+-e shall overtake when necessary.
+-We shall make better interactions both for player and NPC, as teams and as drivers
+-we shall build a service point economy.
+-We shall drive into pit when we need that
+-fix empty card deck exception
+-We shall make game function with other sets of car attributes
+-Add more -78 cars teams and drivers
+-Do season -82
 
  */

@@ -1,7 +1,7 @@
 // Car attributes and modifiers
 import {Card} from "./cards";
 
-export type CarAttribute = "speed" | "handling" | "setupEase";
+export type CarAttribute = "speed" | "handling";
 
 export type CarAttributes = Record<CarAttribute, number>;
 
@@ -9,7 +9,7 @@ export type CarComponent = 'engine' | 'tyres' | 'brakes' | 'gearbox';
 
 export type CarComponents = Record<CarComponent, number>;
 
-export type AttributeModifierSource = 'setup' | 'damage' | 'wear';
+export type AttributeModifierSource = 'setup';
 
 export type AttributeModifierCondition =
     | "qualification"
@@ -37,6 +37,7 @@ export type CarTemplate = {
     id: string;
     name: string;
     team: string;
+    setupEase: number // still 1-7 but not an attribute
     attributes: CarAttributes;
     components: CarComponents;
 };
@@ -128,6 +129,7 @@ export type RaceResult = {
 export type TrackModifierCondition =
     | "qualification"
     | "wet"
+    | "intermediate"
     | "finalLaps"
     | "wheelToWheel"
     | "hotWeather"
@@ -136,27 +138,32 @@ export type TrackModifierCondition =
 export type TrackModifier = {
     condition: TrackModifierCondition | TrackModifierCondition[];
     mod: Partial<CarAttributes>;
+    riskMod?: number;
     description?: string;
 };
+
+export type SetupModifier = TrackModifier; // same shape
 
 export type OvertakeFavouredStat = "speed" | "handling";
 
 export type OvertakingZone = {
+    id: string;
     name: string;
-    difficulty: number;     // 1-4
+    difficulty: number;     // 1-7
     favours: OvertakeFavouredStat;
 };
 
 export type TrackAttributes = {
-    speedBias: number;          // 1-4
-    technicality: number;       // 1-4
+    speedBias: number;          // 1-7
+    technicality: number;       // 1-7
     rainChance: number;         // 0–100
     dryChance: number;          // 0-100
+    intermediateChance: number;
     hotChance: number;          // 0-100
     coldChance: number;         // 0-100
     dustyChance: number;        // 0-100
-    prestige: number;           // 1-4
-    wearFactor: number;         // 1-4
+    prestige: number;           // 1-7
+    wearFactor: number;         // 1-7
     laps: number;               //1-100
 };
 
@@ -227,20 +234,21 @@ export type IncidentEffect =
     | "contact"          // risk for me and for closest rival
     | "crash"           // this is insane, but it happens
 
-export type TrackCondition = "hot" | "cold" | "wet" | "dry" | "dust"  // the last one is for cards
+export type TrackCondition = "hot" | "cold" | "wet" | "dry" | "intermediate" | "dust"  // the last one is for cards
 //export type TrackCondition = "dry" | "wet" | "hot" | "cold" | "dust" | "variable";
 
 export type TrackConditionChances = {
     rain: number;       // 0–100
     dry: number;        // 0–100
+    intermediate: number;
     heat: number;       // 0–100
     cold: number        // 0–100
     dust: number;       // 0–100
 }
 
 export type PhaseEffect =
-    | { type: "yellowFlag"; "closedZone": OvertakingZone }                // close one or more overtaking zones, forced slow down
-    | { type: "oilSpill"; "closedZone": OvertakingZone }                 // close one overtakig zone and less grip/handling, increased risk
+    | { type: "yellowFlag"; "closedZone": OvertakingZone; paceFactor: number }                // close one or more overtaking zones, forced slow down
+    | { type: "oilSpill"; "closedZone": OvertakingZone; increasedRisk: number }                 // close one overtakig zone and less grip/handling, increased risk
     | { type: "noChange" };                                                 // no change in conditions
 
 export type RaceEffect =
@@ -294,6 +302,11 @@ export type Lap = {
     lapTime?: string;
     driverId?: string;
     hasIncident: boolean;
+
+    paceFactored?: number,
+    flowPace?: number,
+    flowRiskPace?: number,
+    flowRiskPacePhaseEffectLapTimeMod?: number
 };
 
 export type Session = {
@@ -302,7 +315,13 @@ export type Session = {
     laps: Record<string, Lap[]>; // keyed by driverId
 };
 
-//
+// This is a rule object for components -> affecting attributes:
+export const ComponentToAttributeMap: Record<CarComponent, CarAttribute> = {
+    engine: "speed",
+    tyres: "handling",
+    brakes: "handling",
+    gearbox: "speed"
+};
 
 
 

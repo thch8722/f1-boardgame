@@ -1,25 +1,61 @@
-import {GameDriver, GameTeam, Phase, Session} from "../logic/types";
+import {GameDriver, GameTeam, Phase, Session, TrackCondition, TrackModifier} from "../logic/types";
 import {getChampionshipPoints} from "../logic/carLogic";
 import {setUpCar} from "../logic/setUpHelper";
 import {io} from "../io/terminal/io";
 import {GameState} from "./gameState";
 import {driveQualificationLap, sortRaceStandings} from "../logic/raceLogic";
 import {getTeamById} from "./gameHelpers";
-import {rollTrackCondition} from "../logic/rollLogic";
+import {closeRandomOvertakingZone, createTrackModifiersForCondition, rollTrackCondition} from "../logic/trackLogic";
+import {debugTrackModifiers} from "../debug/debug";
+
 
 
 export const phaseRunner = (phase: Phase, gameState: GameState): GameState => {
     io.print("-------" + phase.name + "-------");
-    const updatedRaceStandings: GameDriver[] = [];
+    raceCardEffects(gameState);
+
+    // DEBUG:
+    io.debug("Current phaseEffect: " + JSON.stringify(gameState.phaseEffect, null, 2))
+    debugTrackModifiers(gameState.currentTrack)
+
+    /*
     const raceCard = gameState.raceCards.draw();
     io.print(`Race Card drawn: ${raceCard.name} — ${raceCard.description}`);
+    // make new race card accessible:
+    gameState.currentRaceCard = raceCard;
 
+    // old phaseEffects shall be removed each new phase
+    gameState.phaseEffect = undefined;
+
+    // track condition:
     if (raceCard.effect.type === "trackConditionChange") {
-        // TODO roll weather change and create Track condition'
-        // const newCondition = rollTrackCondition(gameState.track.attributes);
-    } else {
-        // TODO create Phase Effect
+        const newCondition: TrackCondition = rollTrackCondition(gameState.currentTrack);
+        const newModifiers: TrackModifier[] = createTrackModifiersForCondition(newCondition);
+
+        // Replace or add to track modifiers:
+        gameState.currentTrack.modifiers = newModifiers;
+
+    } else if (raceCard.effect.type === "yellowFlag") {
+        const zoneToClose = closeRandomOvertakingZone(gameState);
+        if (zoneToClose) {
+            gameState.phaseEffect = {
+                type: "yellowFlag",
+                closedZone: zoneToClose,
+                lapTimePenalty: 2
+            };
+        }
+
+    } else if (raceCard.effect.type === "oilSpill") {
+        const zoneToClose = closeRandomOvertakingZone(gameState);
+        if (zoneToClose) {
+            gameState.phaseEffect = {
+                type: "oilSpill",
+                closedZone: zoneToClose,
+                increasedRisk: 1,
+            }
+        }
     }
+     */
     // Present conditions for phase for players
     if (phase.type === "BUILDUP") {
         const standingsAfterBuildUp = runBuildUp(phase, gameState);
@@ -103,7 +139,8 @@ export const formatGridTwoColumns = (raceStandings: GameDriver[], gameState: Gam
     const formatDriver = (pos: number, driver?: GameDriver): string => {
         if (!driver) return "";
 
-        const lapTimeStr = driver.latestLap?.lapTime ?? "N/A";
+        // const lapTimeStr = driver.latestLap?.lapTime ?? "N/A";
+        const lapTimeStr = driver.latestLap?.rollTotal ?? 0;
         const name = driver.name;
         const team = truncate(getTeamById(driver.team, gameState.teams)?.name, 20);
 
@@ -132,7 +169,58 @@ export const formatGridTwoColumns = (raceStandings: GameDriver[], gameState: Gam
     return output;
 };
 
+export const raceCardEffects = (gameState: GameState) => {
+    const raceCard = gameState.raceCards.draw();
+    io.print(`Race Card drawn: ${raceCard.name} — ${raceCard.description}`);
+    // make new race card accessible:
+    gameState.currentRaceCard = raceCard;
 
+    // old phaseEffects shall be removed each new phase
+    gameState.phaseEffect = undefined;
+
+    // track condition:
+    if (raceCard.effect.type === "trackConditionChange") {
+        const newCondition: TrackCondition = rollTrackCondition(gameState.currentTrack);
+        gameState.currentCondition = newCondition;
+        io.print(`New track condition rolled: ${newCondition}`);
+        const newModifiers: TrackModifier[] = createTrackModifiersForCondition(newCondition);
+
+        // Replace or add to track modifiers:
+        gameState.currentTrack.modifiers = newModifiers;
+
+    } else if (raceCard.effect.type === "yellowFlag") {
+        const zoneToClose = closeRandomOvertakingZone(gameState);
+        if (zoneToClose) {
+            gameState.phaseEffect = {
+                type: "yellowFlag",
+                closedZone: zoneToClose,
+                paceFactor: 0.5 // halve pace
+            };
+        }
+
+    } else if (raceCard.effect.type === "oilSpill") {
+        const zoneToClose = closeRandomOvertakingZone(gameState);
+        if (zoneToClose) {
+            gameState.phaseEffect = {
+                type: "oilSpill",
+                closedZone: zoneToClose,
+                increasedRisk: 1,
+            }
+        }
+    }
+
+    if (gameState.phaseEffect) {
+        io.debug(`Phase effect active: ${gameState.phaseEffect.type}`);
+
+        if (gameState.phaseEffect.type === "oilSpill") {
+            io.print(` - Closed overtaking zone: ${gameState.phaseEffect.closedZone.name}`);
+            io.print(` - Increased risk: ${gameState.phaseEffect.increasedRisk}`);
+        } else if (gameState.phaseEffect.type === "yellowFlag") {
+            io.print(` - Closed overtaking zone: ${gameState.phaseEffect.closedZone.name}`);
+            io.print(` - Lap time Mod: ${gameState.phaseEffect.paceFactor}`);
+        }
+    }
+}
 
 /*
 

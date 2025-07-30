@@ -4,6 +4,7 @@ import {getCarAttributeMod} from "./carLogic";
 import {rollDice} from "./rollLogic";
 import {io} from "../io/terminal/io";
 import {getDriverAttributeMod} from "./driverLogic";
+import {getPaceFactored, getPhaseEffectLapTimeMod} from "./trackLogic";
 
 
 export const driveQualificationLap = (
@@ -11,18 +12,21 @@ export const driveQualificationLap = (
     gameState: GameState,
     options: { risk: number, flow: number }
 ): Lap => {
-    const carScore = getCarQualificationScore(driver.car, gameState.currentTrack);
+    const carScore = getCarLapScore(driver.car, gameState);
     const driverScore = getDriverQualificationScore(driver);
-    const pace = carScore + driverScore;
-    const flowPace = pace + options.flow;
-
+    const rawPace = carScore + driverScore;
+    const pace = Math.max(0, rawPace);
+    const paceFactored = getPaceFactored(pace, gameState);
+    const flowPace = paceFactored + options.flow;
     const hasIncident: boolean = isRiskIncident(options.risk, driver, gameState);
     const flowRiskPace = flowPace + options.risk;
+    const flowRiskPacePhaseEffectLapTimeMod = flowRiskPace + getPhaseEffectLapTimeMod(gameState);
 
     const roll = rollDice();
 
+    const BASELINE_OFFSET = 30; // tune this number as needed
 
-    const rollTotal = flowRiskPace + roll;
+    let rollTotal = flowRiskPacePhaseEffectLapTimeMod + roll + BASELINE_OFFSET + 3;
 
     const lap: Lap = {
         rollTotal,
@@ -31,11 +35,18 @@ export const driveQualificationLap = (
         risk: options.risk,
         flow: options.flow,
         driverId: driver.id,
-        hasIncident: hasIncident
+        hasIncident: hasIncident,
+
+        paceFactored,
+        flowPace,
+        flowRiskPace,
+        flowRiskPacePhaseEffectLapTimeMod
     }
 
+    io.debug(JSON.stringify(lap));
+
     lap.lapTime = calculateAndFormatLapTime(lap,gameState.currentTrack);
-    io.debug("LAP: " + JSON.stringify(lap));
+    io.debug("LAP: " + driver.name + " " + JSON.stringify(lap));
     return lap;
 };
 
@@ -46,14 +57,26 @@ const isRiskIncident = (risk: number, driver: GameDriver, gameState: GameState) 
 }
 
 
-export const getCarQualificationScore = (car: CarInstance, track: Track) => {
-    const speedMod = getCarAttributeMod(car, "speed");
-    const handlingMod = getCarAttributeMod(car, "handling");
+export const getCarLapScore = (car: CarInstance, gameState: GameState) => {
+    let speedMod = getCarAttributeMod(car, "speed");
+    let handlingMod = getCarAttributeMod(car, "handling");
+    const track = gameState.currentTrack;
 
     // is track biased for speed or technicality / handling?
-    const { speedBias, technicality } = track.attributes;
+    const {speedBias, technicality} = track.attributes;
+
+    // Track might be in an altered state:
+
+    // ✅ Add all active condition modifiers:
+    const trackModifiers = track.modifiers;
+    if (trackModifiers) {
+        for (const mod of trackModifiers) {
+            speedMod += mod.mod.speed ?? 0;
+            handlingMod += mod.mod.handling ?? 0;
+        }
+    }
     return speedMod * speedBias + handlingMod * technicality;
-};
+}
 
 export const getDriverQualificationScore = (driver: GameDriver) => {
     const speed = getDriverAttributeMod(driver, "speed");
@@ -89,6 +112,8 @@ export const calculateAndFormatLapTime = (
     paceFactor = 10 // each pace point worth 10 milliseconds
 ): string => {
     // Clamp rollTotal to prevent negative values from adding time instead of removing it
+    // const effectiveRoll = Math.max(0, lap.rollTotal);
+    // Prevent negative rollTotal from making lap time faster (which is illogical)
     const effectiveRoll = Math.max(0, lap.rollTotal);
 
     // Each roll point reduces the lap time by track-specific factor (bigger roll → faster)

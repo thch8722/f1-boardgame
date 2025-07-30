@@ -6,27 +6,44 @@ export const tracks1978: Track[] = [
         "name": "Autódromo Juan y Óscar Gálvez",
         "country": "Argentina",
         "eventDate": "1978-01-15",
-        "baseLapTime": 104.2,
-        "lapTimeFactor": 0.35,
+        "baseLapTime": 125,
+        "lapTimeFactor": 0.30,
         "attributes": {
             "laps": 52,
             "speedBias": 5,
             "technicality": 3,
-            "rainChance": 15,
-            "dryChance": 55,
-            "hotChance": 25,
             "coldChance": 0,
+
+
+            "rainChance": 0,
+            "intermediateChance": 0,
+            "dryChance": 100,
+            "hotChance": 0,
+            "dustyChance": 0,
+
+            /*
+            "rainChance": 10,
+            "intermediateChance": 10,
+            "dryChance": 50,
+            "hotChance": 25,
             "dustyChance": 5,
+
+             */
+
+
             "prestige": 4,
             "wearFactor": 5
+
         },
         "overtakingZones": [
             {
+                "id": "argentine_gp_1",
                 "name": "Curva 1",
                 "difficulty": 4,
                 "favours": "handling"
             },
             {
+                "id": "argentine_gp_2",
                 "name": "Straight Backstretch",
                 "difficulty": 3,
                 "favours": "speed"
@@ -44,8 +61,9 @@ export const tracks1978: Track[] = [
             "laps": 78,
             "speedBias": 5,
             "technicality": 5,
-            "rainChance": 20,
-            "dryChance": 50,
+            "rainChance": 15,
+            "intermediateChance": 10,
+            "dryChance": 45,
             "hotChance": 20,
             "coldChance": 5,
             "dustyChance": 5,
@@ -54,11 +72,13 @@ export const tracks1978: Track[] = [
         },
         "overtakingZones": [
             {
+                "id": "south_african_gp_1",
                 "name": "Turn 1",
                 "difficulty": 5,
                 "favours": "handling"
             },
             {
+                "id": "south_african_gp_2",
                 "name": "Back Straight",
                 "difficulty": 3,
                 "favours": "speed"
@@ -76,8 +96,9 @@ export const tracks1978: Track[] = [
             "laps": 40,
             "speedBias": 3,
             "technicality": 4,
-            "rainChance": 30,
-            "dryChance": 45,
+            "rainChance": 25,
+            "intermediateChance": 10,
+            "dryChance": 40,
             "hotChance": 20,
             "coldChance": 0,
             "dustyChance": 5,
@@ -86,11 +107,13 @@ export const tracks1978: Track[] = [
         },
         "overtakingZones": [
             {
+                "id": "brazilian_gp_1",
                 "name": "Curva do Sol",
                 "difficulty": 5,
                 "favours": "handling"
             },
             {
+                "id": "brazilian_gp_2",
                 "name": "Straight Before Senna S",
                 "difficulty": 4,
                 "favours": "speed"
@@ -108,7 +131,8 @@ export const tracks1978: Track[] = [
             "laps": 75,
             "speedBias": 2,
             "technicality": 4,
-            "rainChance": 10,
+            "rainChance": 5,
+            "intermediateChance": 5,
             "dryChance": 55,
             "hotChance": 30,
             "coldChance": 0,
@@ -118,11 +142,13 @@ export const tracks1978: Track[] = [
         },
         "overtakingZones": [
             {
+                "id": "spanish_gp_1",
                 "name": "Turn 1",
                 "difficulty": 5,
                 "favours": "handling"
             },
             {
+                "id": "spanish_gp_2",
                 "name": "Back Straight",
                 "difficulty": 4,
                 "favours": "speed"
@@ -140,8 +166,9 @@ export const tracks1978: Track[] = [
             "laps": 76,
             "speedBias": 1,
             "technicality": 5,
-            "rainChance": 20,
-            "dryChance": 50,
+            "rainChance": 15,
+            "intermediateChance": 10,
+            "dryChance": 45,
             "hotChance": 10,
             "coldChance": 15,
             "dustyChance": 5,
@@ -150,14 +177,16 @@ export const tracks1978: Track[] = [
         },
         "overtakingZones": [
             {
+                "id": "monaco_gp_1",
                 "name": "Mirabeau",
                 "difficulty": 7,
                 "favours": "handling"
             },
             {
-                "name": "Portier",
-                "difficulty": 7,
-                "favours": "handling"
+                id: "monaco-top-speed-straight",
+                name: "Top Speed Straight",
+                difficulty: 7,
+                favours: "speed",
             }
         ]
     },
@@ -172,8 +201,9 @@ export const tracks1978: Track[] = [
             "laps": 70,
             "speedBias": 4,
             "technicality": 3,
-            "rainChance": 30,
-            "dryChance": 45,
+            "rainChance": 25,
+            "intermediateChance": 10,
+            "dryChance": 40,
             "hotChance": 10,
             "coldChance": 10,
             "dustyChance": 5,
@@ -182,11 +212,13 @@ export const tracks1978: Track[] = [
         },
         "overtakingZones": [
             {
+                "id": "swedish_gp_1",
                 "name": "Turn 1",
                 "difficulty": 3,
                 "favours": "handling"
             },
             {
+                "id": "swedish_gp_2",
                 "name": "Back Straight",
                 "difficulty": 3,
                 "favours": "speed"
@@ -204,7 +236,8 @@ export const tracks1978: Track[] = [
             "laps": 54,
             "speedBias": 4,
             "technicality": 4,
-            "rainChance": 20,
+            "rainChance": 10,
+            "intermediateChance": 10,
             "dryChance": 50,
             "hotChance": 20,
             "coldChance": 5,
@@ -214,11 +247,13 @@ export const tracks1978: Track[] = [
         },
         "overtakingZones": [
             {
+                "id": "french_gp_1",
                 "name": "Signes",
                 "difficulty": 4,
                 "favours": "speed"
             },
             {
+                "id": "french_gp_2",
                 "name": "Virage du Pont",
                 "difficulty": 4,
                 "favours": "handling"
@@ -236,8 +271,9 @@ export const tracks1978: Track[] = [
             "laps": 76,
             "speedBias": 3,
             "technicality": 4,
-            "rainChance": 35,
-            "dryChance": 45,
+            "rainChance": 30,
+            "intermediateChance": 10,
+            "dryChance": 40,
             "hotChance": 10,
             "coldChance": 5,
             "dustyChance": 5,
@@ -246,14 +282,16 @@ export const tracks1978: Track[] = [
         },
         "overtakingZones": [
             {
+                "id": "british_gp_1",
                 "name": "Paddock Hill Bend",
                 "difficulty": 4,
                 "favours": "handling"
             },
             {
-                "name": "Druids",
+                "id": "british_gp_2",
+                "name": "Brabham Straight",
                 "difficulty": 3,
-                "favours": "handling"
+                "favours": "speed"
             }
         ]
     },
@@ -268,8 +306,9 @@ export const tracks1978: Track[] = [
             "laps": 45,
             "speedBias": 5,
             "technicality": 3,
-            "rainChance": 25,
-            "dryChance": 50,
+            "rainChance": 20,
+            "intermediateChance": 10,
+            "dryChance": 45,
             "hotChance": 15,
             "coldChance": 5,
             "dustyChance": 5,
@@ -278,11 +317,13 @@ export const tracks1978: Track[] = [
         },
         "overtakingZones": [
             {
+                "id": "german_gp_1",
                 "name": "Hairpin",
                 "difficulty": 3,
                 "favours": "handling"
             },
             {
+                "id": "german_gp_2",
                 "name": "Long Straight",
                 "difficulty": 2,
                 "favours": "speed"
@@ -300,8 +341,9 @@ export const tracks1978: Track[] = [
             "laps": 54,
             "speedBias": 4,
             "technicality": 3,
-            "rainChance": 30,
-            "dryChance": 45,
+            "rainChance": 25,
+            "intermediateChance": 10,
+            "dryChance": 40,
             "hotChance": 15,
             "coldChance": 5,
             "dustyChance": 5,
@@ -310,11 +352,13 @@ export const tracks1978: Track[] = [
         },
         "overtakingZones": [
             {
+                "id": "austrian_gp_1",
                 "name": "Turn 1",
                 "difficulty": 4,
                 "favours": "handling"
             },
             {
+                "id": "austrian_gp_2",
                 "name": "Back Straight",
                 "difficulty": 3,
                 "favours": "speed"
@@ -332,7 +376,8 @@ export const tracks1978: Track[] = [
             "laps": 40,
             "speedBias": 7,
             "technicality": 1,
-            "rainChance": 20,
+            "rainChance": 15,
+            "intermediateChance": 5,
             "dryChance": 60,
             "hotChance": 15,
             "coldChance": 3,
@@ -342,11 +387,13 @@ export const tracks1978: Track[] = [
         },
         "overtakingZones": [
             {
+                "id": "italian_gp_1",
                 "name": "Rettifilo chicane",
                 "difficulty": 1,
                 "favours": "handling"
             },
             {
+                "id": "italian_gp_2",
                 "name": "Parabolica",
                 "difficulty": 2,
                 "favours": "speed"
@@ -364,8 +411,9 @@ export const tracks1978: Track[] = [
             "laps": 80,
             "speedBias": 2,
             "technicality": 2,
-            "rainChance": 25,
-            "dryChance": 50,
+            "rainChance": 20,
+            "intermediateChance": 10,
+            "dryChance": 45,
             "hotChance": 15,
             "coldChance": 8,
             "dustyChance": 2,
@@ -374,11 +422,13 @@ export const tracks1978: Track[] = [
         },
         "overtakingZones": [
             {
+                "id": "canadian_gp_1",
                 "name": "Turn 1",
                 "difficulty": 4,
                 "favours": "handling"
             },
             {
+                "id": "canadian_gp_2",
                 "name": "Back Straight",
                 "difficulty": 3,
                 "favours": "speed"
@@ -396,8 +446,9 @@ export const tracks1978: Track[] = [
             "laps": 59,
             "speedBias": 4,
             "technicality": 4,
-            "rainChance": 30,
-            "dryChance": 50,
+            "rainChance": 25,
+            "intermediateChance": 10,
+            "dryChance": 45,
             "hotChance": 15,
             "coldChance": 3,
             "dustyChance": 2,
@@ -406,11 +457,13 @@ export const tracks1978: Track[] = [
         },
         "overtakingZones": [
             {
+                "id": "us_gp_east_1",
                 "name": "Turn 1",
                 "difficulty": 4,
                 "favours": "handling"
             },
             {
+                "id": "us_gp_east_2",
                 "name": "Back Straight",
                 "difficulty": 3,
                 "favours": "speed"
@@ -428,8 +481,9 @@ export const tracks1978: Track[] = [
             "laps": 73,
             "speedBias": 3,
             "technicality": 6,
-            "rainChance": 35,
-            "dryChance": 45,
+            "rainChance": 30,
+            "intermediateChance": 10,
+            "dryChance": 40,
             "hotChance": 10,
             "coldChance": 8,
             "dustyChance": 2,
@@ -438,11 +492,13 @@ export const tracks1978: Track[] = [
         },
         "overtakingZones": [
             {
+                "id": "japanese_gp_1",
                 "name": "Turn 1",
                 "difficulty": 3,
                 "favours": "handling"
             },
             {
+                "id": "japanese_gp_2",
                 "name": "Back Straight",
                 "difficulty": 3,
                 "favours": "speed"
@@ -461,8 +517,9 @@ export const tracks1978: Track[] = [
             laps: 70,                   // similar race length to Anderstorp, Jarama
             speedBias: 3,               // moderate speed emphasis, not extreme
             technicality: 5,            // quite technical track
-            rainChance: 25,             // fair chance of rain (Belgium)
-            dryChance: 50,              // still mostly dry races
+            rainChance: 20,             // fair chance of rain (Belgium)
+            "intermediateChance": 10,
+            dryChance: 45,              // still mostly dry races
             hotChance: 15,              // occasional warm days
             coldChance: 5,              // cooler days possible
             dustyChance: 5,             // low dust, but some dust possible
@@ -472,11 +529,13 @@ export const tracks1978: Track[] = [
 
         overtakingZones: [
             {
+                id: "belgian_gp_zolder_1",
                 name: "Chicane",
                 difficulty: 5,
                 favours: "handling"
             },
             {
+                id: "belgian_gp_zolder_2",
                 name: "Straight Before Finish",
                 difficulty: 3,
                 favours: "speed"
@@ -495,8 +554,9 @@ export const tracks1978: Track[] = [
             laps: 72,                  // typical race length for this track
             speedBias: 5,              // fast flowing, favors speed and flow
             technicality: 6,           // technical, but rhythmical track
-            rainChance: 20,            // moderate rain probability due to coastal climate
-            dryChance: 60,             // most races dry or mostly dry
+            rainChance: 15,            // moderate rain probability due to coastal climate
+            "intermediateChance": 10,
+            dryChance: 55,             // most races dry or mostly dry
             hotChance: 10,             // occasional warm days in summer
             coldChance: 5,             // some cooler days
             dustyChance: 5,            // low dust - sandy surroundings but usually damp
@@ -506,11 +566,13 @@ export const tracks1978: Track[] = [
 
         overtakingZones: [
             {
+                id: "dutch_gp_zandvoort_1",
                 name: "Tarzan Corner",
                 difficulty: 4,
                 favours: "speed"
             },
             {
+                id: "dutch_gp_zandvoort_2",
                 name: "Haarbocht",
                 difficulty: 3,
                 favours: "handling"

@@ -5,8 +5,9 @@ import {getTeamById} from "./gameHelpers";
 
 
 const driverAttributeSum = (driver: GameDriver) => {
-    return driver.attributes.adaptability
+    return driver.attributes.bravery
         + driver.attributes.speed
+        + driver.attributes.rainSkill
         + driver.attributes.racecraft
         + driver.attributes.focus
         + driver.attributes.mechanicalFeel;
@@ -15,7 +16,7 @@ const driverAttributeSum = (driver: GameDriver) => {
 const modelAttributes = (carTemplate: CarTemplate) => {
     return carTemplate.attributes.speed
     + carTemplate.attributes.handling
-    + carTemplate.attributes.setupEase
+    + carTemplate.setupEase
 }
 
 const modelComponents = (carTemplate: CarTemplate) => {

@@ -13,12 +13,15 @@ export const drivers1978: DriverRaw[] = [
             rainSkill: 3,
             bravery: 4
         },
+
+
         team: "brabham",
         car: "brabham_bt46_1",
         homeTrackId: "german_gp",
         carNumber: 1,
         traits: ["Cool and calm"]
     },
+    /*
     {
         id: "john_watson",
         name: "John Watson",
@@ -350,6 +353,8 @@ export const drivers1978: DriverRaw[] = [
         carNumber: 16,
         traits: ["Showman", "Unpredictable"]
     },
+
+     */
     {
         id: "hector_rebaque",
         name: "Héctor Rebaque",
@@ -368,5 +373,7 @@ export const drivers1978: DriverRaw[] = [
         carNumber: 25,
         traits: ["Rookie"]
     }
+
+
 ]
 
