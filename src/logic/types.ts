@@ -7,6 +7,8 @@ export type CarAttributes = Record<CarAttribute, number>;
 
 export type CarComponent = 'engine' | 'tyres' | 'brakes' | 'gearbox';
 
+export type ComponentCondition = "brandNew" | "worn" | "critical" | "depleted";
+
 export type CarComponents = Record<CarComponent, number>;
 
 export type AttributeModifierSource = 'setup';
@@ -285,11 +287,11 @@ export interface Phase {
 export type SetupFocus =
     | "rain"
     | "qualification"
-    | "lateSprint"
+    | "latesprint"
     | "handling"
-    | "topSpeed"
+    | "topspeed"
     | "reliability"
-    | "wheelToWheel";
+    | "wheeltowheel";
 
 
 // Session and laps:
@@ -306,7 +308,9 @@ export type Lap = {
     paceFactored?: number,
     flowPace?: number,
     flowRiskPace?: number,
-    flowRiskPacePhaseEffectLapTimeMod?: number
+    flowRiskPacePhaseEffectLapTimeMod?: number,
+    driverScore: number,
+    carScore?: number
 };
 
 export type Session = {

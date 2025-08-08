@@ -42,7 +42,7 @@ export const racePhasesLoop = async (
 
             const phase = phases[currentPhaseIndex];
             io.print(`Running phase ${currentPhaseIndex + 1}: ${phase.name}`);
-            gameState = phaseRunner(phase, gameState);
+            gameState = await phaseRunner(phase, gameState);
             currentPhaseIndex++;
         } else {
             io.print('Unknown command. Use "next", "status", or "exit".');

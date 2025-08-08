@@ -195,4 +195,55 @@ export const cars1978: CarTemplate[] = [
         },
         components: { engine: 3, tyres: 3, brakes: 3, gearbox: 3 },
     },
+    {
+        id: "ats_hs01",
+        name: "ATS HS01",
+        team: "ats",
+        setupEase: 2, // tough car to dial in
+        attributes: {
+            speed: 1,     // poor straight-line speed
+            handling: 2   // somewhat better due to nimbleness, but still weak
+        },
+        components: {
+            engine: 2,    // old Ford-Cosworth DFV, unreliable in this setup
+            tyres: 2,     // Goodyear but little factory support
+            brakes: 2,    // nothing special
+            gearbox: 2    // fragile
+        }
+    },
+    {
+        id: "theodore_tr1",
+        name: "Theodore TR1",
+        team: "theodore",
+        setupEase: 1, // very hard to dial in — famously unstable
+        attributes: {
+            speed: 1,      // slowest on the grid
+            handling: 2    // unpredictable under pressure
+        },
+        components: {
+            engine: 2,     // standard DFV engine but unreliable install
+            tyres: 2,      // inconsistent grip
+            brakes: 2,     // nothing special, sometimes overheating
+            gearbox: 2     // known to be a weak link under stress
+        }
+    },
+    {
+        id: "theodore_wr3",
+        name: "Theodore-Wolf WR3",
+        team: "theodore",
+        setupEase: 3, // Not easy to set up (it's old), but more predictable than the TR1
+        attributes: {
+            speed: 3,      // Decent, because it was once a front-running car
+            handling: 3    // Balanced but dated, harder to recover if pushed
+        },
+        components: {
+            engine: 3,     // DFV standard — clean install, but aging
+            tyres: 3,      // Likely running basic Goodyears, not the latest spec
+            brakes: 2,     // Older but stable if not overheated
+            gearbox: 2     // Weak point — aging, not built for wear
+        }
+    }
+
+
+
 ];

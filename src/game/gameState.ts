@@ -30,6 +30,7 @@ export interface GameState {
     currentRaceCard?: RaceCard;
     phases: Phase[];
     phaseEffect?: PhaseEffect;
+    currentPhase?: Phase;
 
     raceStatus: "green" | "yellow" | "red";          // overall race flag/status
     currentCondition: TrackCondition              // active track states, e.g. ['wet', 'hot']

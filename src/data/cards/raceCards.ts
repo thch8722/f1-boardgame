@@ -19,14 +19,15 @@ export const raceCardTemplates: RaceCardTemplate[] = [
         effect:  { type: "yellowFlag" },
         name: "Yellow flag",
         description: "Yellow flag, reduce speed, no overtaking in one or more zones",
-        count: 2
-        //count: 100000
+        //count: 2
+        count: 0
     },
     {
         effect:  { type: "oilSpill" },
         name: "Oil spill",
         description: "Cars handle less well, and no overtaking in one zone. Increased risk",
-        count: 2
+        // count: 2
+        count: 0
     },
     {
         effect: { type: "noChange"},

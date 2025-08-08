@@ -7,11 +7,13 @@ import {getDriverAttributeMod} from "./driverLogic";
 import {getPaceFactored, getPhaseEffectLapTimeMod} from "./trackLogic";
 
 
-export const driveQualificationLap = (
+export const driveLap = (
     driver: GameDriver,
     gameState: GameState,
     options: { risk: number, flow: number }
 ): Lap => {
+    io.debug(`Before lap - driver ${driver.name} tireType=${driver.car.tireType}`);
+
     const carScore = getCarLapScore(driver.car, gameState);
     const driverScore = getDriverQualificationScore(driver);
     const rawPace = carScore + driverScore;
@@ -26,7 +28,7 @@ export const driveQualificationLap = (
 
     const BASELINE_OFFSET = 30; // tune this number as needed
 
-    let rollTotal = flowRiskPacePhaseEffectLapTimeMod + roll + BASELINE_OFFSET + 3;
+    let rollTotal = flowRiskPacePhaseEffectLapTimeMod + roll + BASELINE_OFFSET;
 
     const lap: Lap = {
         rollTotal,
@@ -40,7 +42,9 @@ export const driveQualificationLap = (
         paceFactored,
         flowPace,
         flowRiskPace,
-        flowRiskPacePhaseEffectLapTimeMod
+        flowRiskPacePhaseEffectLapTimeMod,
+        carScore,
+        driverScore
     }
 
     io.debug(JSON.stringify(lap));
@@ -58,29 +62,40 @@ const isRiskIncident = (risk: number, driver: GameDriver, gameState: GameState) 
 
 
 export const getCarLapScore = (car: CarInstance, gameState: GameState) => {
-    let speedMod = getCarAttributeMod(car, "speed");
-    let handlingMod = getCarAttributeMod(car, "handling");
+    let speedMod = getCarAttributeMod(car, "speed", gameState);
+    let handlingMod = getCarAttributeMod(car, "handling", gameState);
     const track = gameState.currentTrack;
+    const { speedBias, technicality } = track.attributes;
 
-    // is track biased for speed or technicality / handling?
-    const {speedBias, technicality} = track.attributes;
-
-    // Track might be in an altered state:
-
-    // ✅ Add all active condition modifiers:
-    const trackModifiers = track.modifiers;
-    if (trackModifiers) {
-        for (const mod of trackModifiers) {
+    // Apply track modifiers (already includes rain penalties)
+    if (track.modifiers) {
+        for (const mod of track.modifiers) {
             speedMod += mod.mod.speed ?? 0;
             handlingMod += mod.mod.handling ?? 0;
         }
     }
-    return speedMod * speedBias + handlingMod * technicality;
-}
+
+    const isTrackWet = gameState.currentCondition === "wet";
+
+    // Penalty only when tyre type doesn't match weather
+    if (!isTrackWet && car.tireType === "wet") {
+        handlingMod -= 2; // rain tyres on dry
+    }
+    if (isTrackWet && car.tireType === "dry") {
+        handlingMod -= 2; // slicks on wet
+    }
+
+    const score = speedMod * speedBias + handlingMod * technicality;
+    io.debug(`getCarLapScore tyre=${car.tireType} wet=${isTrackWet} => score=${score.toFixed(2)}`);
+    return score;
+};
+
 
 export const getDriverQualificationScore = (driver: GameDriver) => {
     const speed = getDriverAttributeMod(driver, "speed");
     const focus = getDriverAttributeMod(driver, "focus");
+
+    // TODO review this, maybe we want ALL driver scores here
     return speed * 2 + focus * 1; // if you want focus to matter less
 };
 

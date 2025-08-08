@@ -1,5 +1,6 @@
 import {AttributeModifierCondition, TrackCondition, TrackConditionChances} from "./types";
 import {CURRENT_DICE_METHOD, DEBUG} from "../game/constants";
+import {GameState} from "../game/gameState";
 
 const rollD12 = (): number => {
     return Math.floor(Math.random() * 12) + 1;
@@ -43,14 +44,26 @@ export function evaluateThresholds<T>(
 
 export function isConditionMet(
     modifierCondition: AttributeModifierCondition | AttributeModifierCondition[],
-    currentContext: AttributeModifierCondition[]
+    gameState: GameState
 ): boolean {
     if (Array.isArray(modifierCondition)) {
-        // Check if all conditions are present in current context
-        return modifierCondition.every(cond => currentContext.includes(cond));
+        return modifierCondition.every(cond => checkCondition(cond, gameState));
     } else {
-        // Single condition case
-        return currentContext.includes(modifierCondition);
+        return checkCondition(modifierCondition, gameState);
     }
 }
 
+
+function checkCondition(cond: AttributeModifierCondition, gameState: GameState): boolean {
+    switch (cond) {
+        case "qualification":
+            return gameState.currentPhase?.type === "QUALIFICATION";
+        case "wet":
+            return gameState.currentCondition === "wet";
+        case "finalLaps":
+            return gameState.currentPhase?.type === "FINAL";
+        // add more when you need them
+        default:
+            return false;
+    }
+}

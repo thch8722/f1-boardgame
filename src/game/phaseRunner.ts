@@ -1,61 +1,25 @@
-import {GameDriver, GameTeam, Phase, Session, TrackCondition, TrackModifier} from "../logic/types";
-import {getChampionshipPoints} from "../logic/carLogic";
+import {GameDriver, GameTeam, Phase, Session, SetupFocus, TrackCondition, TrackModifier} from "../logic/types";
+import {fitCarWithTyres, getChampionshipPoints} from "../logic/carLogic";
 import {setUpCar} from "../logic/setUpHelper";
 import {io} from "../io/terminal/io";
 import {GameState} from "./gameState";
-import {driveQualificationLap, sortRaceStandings} from "../logic/raceLogic";
+import {driveLap, sortRaceStandings} from "../logic/raceLogic";
 import {getTeamById} from "./gameHelpers";
 import {closeRandomOvertakingZone, createTrackModifiersForCondition, rollTrackCondition} from "../logic/trackLogic";
 import {debugTrackModifiers} from "../debug/debug";
+import {setupFocusLoop} from "../inputLoops/setupFocusLoop";
 
 
 
-export const phaseRunner = (phase: Phase, gameState: GameState): GameState => {
+export const phaseRunner = async (phase: Phase, gameState: GameState): Promise<GameState> => {
     io.print("-------" + phase.name + "-------");
+    gameState.currentPhase = phase;
     raceCardEffects(gameState);
 
     // DEBUG:
     io.debug("Current phaseEffect: " + JSON.stringify(gameState.phaseEffect, null, 2))
     debugTrackModifiers(gameState.currentTrack)
 
-    /*
-    const raceCard = gameState.raceCards.draw();
-    io.print(`Race Card drawn: ${raceCard.name} — ${raceCard.description}`);
-    // make new race card accessible:
-    gameState.currentRaceCard = raceCard;
-
-    // old phaseEffects shall be removed each new phase
-    gameState.phaseEffect = undefined;
-
-    // track condition:
-    if (raceCard.effect.type === "trackConditionChange") {
-        const newCondition: TrackCondition = rollTrackCondition(gameState.currentTrack);
-        const newModifiers: TrackModifier[] = createTrackModifiersForCondition(newCondition);
-
-        // Replace or add to track modifiers:
-        gameState.currentTrack.modifiers = newModifiers;
-
-    } else if (raceCard.effect.type === "yellowFlag") {
-        const zoneToClose = closeRandomOvertakingZone(gameState);
-        if (zoneToClose) {
-            gameState.phaseEffect = {
-                type: "yellowFlag",
-                closedZone: zoneToClose,
-                lapTimePenalty: 2
-            };
-        }
-
-    } else if (raceCard.effect.type === "oilSpill") {
-        const zoneToClose = closeRandomOvertakingZone(gameState);
-        if (zoneToClose) {
-            gameState.phaseEffect = {
-                type: "oilSpill",
-                closedZone: zoneToClose,
-                increasedRisk: 1,
-            }
-        }
-    }
-     */
     // Present conditions for phase for players
     if (phase.type === "BUILDUP") {
         const standingsAfterBuildUp = runBuildUp(phase, gameState);
@@ -64,7 +28,7 @@ export const phaseRunner = (phase: Phase, gameState: GameState): GameState => {
         const standingsAfterSetup = runSetUp(phase, gameState);
         return standingsAfterSetup;
     } else if (phase.type === "QUALIFICATION") {
-        const standingsAfterQualification = runQualification(phase, gameState);
+        const standingsAfterQualification = await runQualification(phase, gameState);
         return standingsAfterQualification;
     }
     // Show standings
@@ -86,15 +50,25 @@ export const runBuildUp = (phase: Phase, gameState: GameState): GameState => {
     return gameState;
 }
 
-export const runSetUp = (phase: Phase, gameState: GameState): GameState => {
+export const runSetUp = async (phase: Phase, gameState: GameState): Promise<GameState> => {
     for (const driver of gameState.raceStandings) {
-        // TODO add tracks and cards and so on
-        setUpCar(driver, ["topSpeed", "rain", "reliability"]);
-    }
-    return gameState;
-}
+        let setupFocuses: SetupFocus[];
 
-export const runQualification = (phase: Phase, gameState: GameState): GameState => {
+        if (driver.isNPC) {
+            // TODO: Replace with actual AI logic later
+            setupFocuses = ["topspeed", "rain", "reliability"];
+        } else {
+            setupFocuses = await setupFocusLoop();
+        }
+
+        setUpCar(driver, setupFocuses);
+    }
+
+    return gameState;
+};
+
+
+export const runQualification = async  (phase: Phase, gameState: GameState): Promise<GameState> => {
     const qualifyingSession: Session = {
         trackId: gameState.currentTrack.id,
         type: "qualifying",
@@ -104,7 +78,8 @@ export const runQualification = (phase: Phase, gameState: GameState): GameState 
     const phaseOrder: GameDriver[] = [];
 
     for (const driver of gameState.raceStandings) {
-        const lap = driveQualificationLap(driver, gameState, { risk: 0, flow: 0 });
+        await fitCarWithTyres(driver, gameState);
+        const lap = driveLap(driver, gameState, { risk: 0, flow: 0 });
 
         if (!lap.driverId) lap.driverId = driver.id;
 

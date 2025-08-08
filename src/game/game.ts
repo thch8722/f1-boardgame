@@ -17,12 +17,18 @@ export const interactiveGame = async () => {
     io.close();
 };
 // TODO
+// Implement intermediate wheather
+// assign 2 flow point to home drivers
+// start race
+// track totaldistance
+// drive laps
+
 /*
 car can be setup for rain, different conditions
-lap times are off
+lap times are off review lap times for tracks
 -Phase lap driving function:
 
-yellow flag clamped top speed
+yellow flag clamped top speed - CHK
 driver penalty
 
 tyres

@@ -2,7 +2,7 @@ import {GameDriver, DriverRaw} from "../../logic/types";
 
 export const drivers1978: DriverRaw[] = [
     {
-        id: "niki_lauda",
+        id: "niki",
         name: "Niki Lauda",
         nickname: "The Rat",
         attributes: {
@@ -21,7 +21,6 @@ export const drivers1978: DriverRaw[] = [
         carNumber: 1,
         traits: ["Cool and calm"]
     },
-    /*
     {
         id: "john_watson",
         name: "John Watson",
@@ -41,7 +40,7 @@ export const drivers1978: DriverRaw[] = [
         traits: ["Cool and calm"]
     },
     {
-        id: "didier_pironi",
+        id: "pironi",
         name: "Didier Pironi",
         attributes: {
             mechanicalFeel: 4,  //  0
@@ -57,7 +56,7 @@ export const drivers1978: DriverRaw[] = [
         traits: ["Rookie", "Aggressive"]
     },
     {
-        id: "patrick_depailler",
+        id: "depailler",
         name: "Patrick Depailler",
         attributes: {
             mechanicalFeel: 6,  // +2
@@ -74,7 +73,7 @@ export const drivers1978: DriverRaw[] = [
         traits: ["Showman"]
     },
     {
-        id: "mario_andretti",
+        id: "mario",
         name: "Mario Andretti",
         attributes: {
             mechanicalFeel: 7,  // +3
@@ -91,7 +90,7 @@ export const drivers1978: DriverRaw[] = [
         traits: ["Cool and calm"]
     },
     {
-        id: "ronnie_peterson",
+        id: "ronnie",
         name: "Ronnie Peterson",
         nickname: "Superswede",
         attributes: {
@@ -115,7 +114,7 @@ export const drivers1978: DriverRaw[] = [
         attributes: {
             mechanicalFeel: 6,  // felt the car well but sometimes pushed too hard
             speed: 6,           // quick and daring on the straights
-            focus: 4,           // could be streaky, sometimes lost composure
+            focus: 3,           // could be streaky, sometimes lost composure
             racecraft: 7,       // aggressive overtaker, no fear
             rainSkill: 5,     // decent at adjusting to conditions
             bravery: 6
@@ -161,7 +160,7 @@ export const drivers1978: DriverRaw[] = [
         traits: ["Cool and calm"]
     },
     {
-        id: "gilles_villeneuve",
+        id: "gilles",
         name: "Gilles Villeneuve",
         nickname: "The Pilot",
         attributes: {
@@ -179,14 +178,14 @@ export const drivers1978: DriverRaw[] = [
         traits: ["Aggressive", "Rookie"]
     },
     {
-        id: "jody_scheckter",
+        id: "jody",
         name: "Jody Scheckter",
         attributes: {
             mechanicalFeel: 6,  // very good setup feel, helps car handling
             speed: 6,           // fast but not the flashiest
             focus: 6,           // mentally sharp and consistent
             racecraft: 6,       // solid race instincts and tactical
-            rainSkill: 1,
+            rainSkill: 3,
             bravery: 5
         },
         team: "wolf",
@@ -196,7 +195,7 @@ export const drivers1978: DriverRaw[] = [
         traits: ["Cool and calm", "Unpredictable"]
     },
     {
-        id: "jacques_laffite",
+        id: "laffite",
         name: "Jacques Laffite",
         nickname: "Jacky",
         attributes: {
@@ -214,7 +213,7 @@ export const drivers1978: DriverRaw[] = [
         traits: ["Cool and calm"]
     },
     {
-        id: "jean_pierre_jabouille",
+        id: "jabou",
         name: "Jean-Pierre Jabouille",
         nickname: "Jabou",
         attributes: {
@@ -250,7 +249,26 @@ export const drivers1978: DriverRaw[] = [
         traits: ["Rookie"]
     },
     {
-        id: "vittorio_brambilla",
+        id: "keegan",
+        name: "Rupert Keegan",
+        nickname: "",
+        attributes: {
+            mechanicalFeel: 4,  // decent car understanding
+            speed: 2,           // below average outright speed
+            focus: 4,           // fairly consistent
+            racecraft: 3,       // average racing skill
+            rainSkill: 3,       // competent but not exceptional
+            bravery: 2          // cautious driver
+        },
+        team: "surtees",
+        car: "surtees_ts19_2",
+        homeTrackId: "british_gp",
+        carNumber: 18,
+        traits: []
+    },
+
+    {
+        id: "brambilla",
         name: "Vittorio Brambilla",
         nickname: "The Monza Gorilla",
         attributes: {
@@ -258,7 +276,7 @@ export const drivers1978: DriverRaw[] = [
             speed: 2,           // very low pace, barely competitive
             focus: 1,           // easily distracted, prone to mistakes
             racecraft: 2,       // weak wheel-to-wheel skills
-            rainSkill: 6,     // poor at adjusting to conditions
+            rainSkill: 2,     // poor at adjusting to conditions
             bravery: 6
         },
         team: "surtees",
@@ -268,7 +286,7 @@ export const drivers1978: DriverRaw[] = [
         traits: ["Rookie", "Aggressive", "Showman"]
     },
     {
-        id: "riccardo_patrese",
+        id: "patrese",
         name: "Riccardo Patrese",
         nickname: "Pat",
         attributes: {
@@ -286,7 +304,7 @@ export const drivers1978: DriverRaw[] = [
         traits: ["Rookie", "Unpredictable"]
     },
     {
-        id: "emerson_fittipaldi",
+        id: "emmo",
         name: "Emerson Fittipaldi",
         nickname: "Emmo",
         attributes: {
@@ -320,7 +338,7 @@ export const drivers1978: DriverRaw[] = [
         traits: ["Rookie", "Aggressive", "Stubborn"]
     },
     {
-        id: "clay_regazzoni",
+        id: "regazzoni",
         name: "Clay Regazzoni",
         attributes: {
             mechanicalFeel: 6,  // good car feedback, veteran sense
@@ -354,9 +372,9 @@ export const drivers1978: DriverRaw[] = [
         traits: ["Showman", "Unpredictable"]
     },
 
-     */
+
     {
-        id: "hector_rebaque",
+        id: "rebaque",
         name: "Héctor Rebaque",
         nickname: "El Puma",
         attributes: {
@@ -372,8 +390,78 @@ export const drivers1978: DriverRaw[] = [
         homeTrackId: "british_gp",
         carNumber: 25,
         traits: ["Rookie"]
+    },
+    {
+        id: "jarier",
+        name: "Jean-Pierre Jarier",
+        nickname: "JP",
+        attributes: {
+            mechanicalFeel: 4,  // decent technical feedback but not perfect
+            speed: 4,           // respectable pace, not blistering but solid
+            focus: 4,           // usually steady concentration
+            racecraft: 3,       // competent but not overly aggressive
+            rainSkill: 3,       // decent in wet conditions
+            bravery: 4          // willing to push but not reckless
+        },
+        team: "ats",
+        car: "ats_hs01_1",
+        homeTrackId: "monaco_gp",
+        carNumber: 10,
+        traits: []
+    },
+    {
+        id: "mass",
+        name: "Jochen Mass",
+        nickname: "Jochen",
+        attributes: {
+            mechanicalFeel: 3,  // less consistent car feedback
+            speed: 3,           // average outright speed
+            focus: 3,           // sometimes a little off in concentration
+            racecraft: 4,       // decent racecraft and defensive skills
+            rainSkill: 4,       // better wet-weather racer
+            bravery: 3          // cautious but willing when needed
+        },
+        team: "ats",
+        car: "ats_hs01_2",
+        homeTrackId: "german_gp",
+        carNumber: 9,
+        traits: []
+    },
+    {
+        id: "cheever",
+        name: "Eddie Cheever",
+        nickname: "",
+        attributes: {
+            mechanicalFeel: 4,  // solid technical feedback
+            speed: 4,           // respectable but not elite pace
+            focus: 3,           // a bit raw, especially early career
+            racecraft: 4,       // could scrap well in traffic
+            rainSkill: 3,       // decent in changing grip
+            bravery: 4          // youthful but smart courage
+        },
+        team: "theodore",
+        car: "theodore_tr1_1",
+        homeTrackId: "us_gp_east",
+        carNumber: 32,
+        traits: ["Rookie"]
+    },
+    {
+        id: "keke",
+        name: "Keke Rosberg",
+        nickname: "Keke",
+        attributes: {
+            mechanicalFeel: 3,  // decent feel, but still adapting
+            speed: 4,           // quick for a rookie
+            focus: 2,           // rookie nerves show
+            racecraft: 3,       // improving but still raw
+            rainSkill: 3,       // capable in wet conditions
+            bravery: 4          // willing to push the limits
+        },
+        team: "theodore",
+        car: "theodore_wr3_1",
+        homeTrackId: "south_african_gp",
+        carNumber: 33,
+        traits: ["Rookie", "Aggressive"]
     }
-
-
 ]
 

@@ -16,12 +16,12 @@ import {io} from "../io/terminal/io";
 
 
 export const mapSetupFocusToCondition: Record<SetupFocus, AttributeModifierCondition | undefined> = {
-    topSpeed: undefined,
+    topspeed: undefined,
     handling: undefined,
     reliability: undefined,
     qualification: "qualification",
-    lateSprint: "finalLaps",
-    wheelToWheel: "wheelToWheel",
+    latesprint: "finalLaps",
+    wheeltowheel: "wheelToWheel",
     rain: "wet",
 };
 
@@ -33,28 +33,23 @@ export const setUpCar = (
     risk: boolean = false
 ) => {
 
-    const roll = rollDice();
-    const driverMod = getDriverAttributeMod(driver, "mechanicalFeel");
-    const carMod = getAttributeMod(driver.car.baseCar.setupEase ?? 0);
-    let rollTotal = roll + driverMod + carMod;
+    const setupRollTotal = calculateSetupRoll(driver, flow, risk);
 
-    if (flow) rollTotal += 1;
-    if (risk) rollTotal += 1;
-    io.print(driver.name + " setting up : " + rollTotal);
+    io.print(driver.name + " setting up : " + setupRollTotal);
 
     // collect all new modifiers here:
     const newModifiers: AttributeModifier[] = [];
     const newComponentMods: ComponentHPModifier[] = [];
 
     // convert total into setup points
-    const setupBonusDistribution = distributeSetupBonus(rollTotal);
+    const setupBonusDistribution = distributeSetupBonus(setupRollTotal);
 
     for (let i = 0; i < setupBonusDistribution.length; i++) {
         const setupFocus = setupFocuses[i];
         const bonus = setupBonusDistribution[i];
 
         switch (setupFocus) {
-            case "topSpeed":
+            case "topspeed":
                 newModifiers.push({
                     source: "setup",
                     mod: {
@@ -78,9 +73,27 @@ export const setUpCar = (
                 // your reliability code...
                 break;
 
+            case "qualification":
+                bonus === 2 ?
+                    newModifiers.push({
+                        source: "setup",
+                        mod: {handling: -1, speed: 2},
+                        condition: "qualification"
+                    })
+                    :
+                    newModifiers.push({
+                        source: "setup",
+                        mod: {speed: 1},
+                        condition: "qualification"
+                    });
+                break
+
             default: {
                 // ✅ NEW: use your mapping
                 const condition = mapSetupFocusToCondition[setupFocus];
+                if (!setupFocus) {
+                    break;
+                }
                 if (!condition) throw new Error(`Missing condition mapping for ${setupFocus}`);
 
                 const mod: AttributeModifier = {
@@ -97,7 +110,6 @@ export const setUpCar = (
                 break;
             }
         }
-
     }
 
     // ✅ ACTUALLY add all modifiers to the car:
@@ -127,7 +139,6 @@ export const setUpCar = (
             io.debug(`    → ${key}: +${value} HP`);
         }
     }
-
 };
 
 
@@ -140,3 +151,18 @@ export const setupThresholds: ThresholdResult<number[]>[] = [
 
 export const distributeSetupBonus = (total: number): number[] =>
     evaluateThresholds(total, setupThresholds, [0, 0, 0]);
+
+export const calculateSetupRoll = (
+    driver: GameDriver,
+    flow: boolean,
+    risk: boolean
+): number => {
+    const roll = rollDice();
+    const driverMod = getDriverAttributeMod(driver, "mechanicalFeel");
+    const carMod = getAttributeMod(driver.car.baseCar.setupEase ?? 0);
+    let rollTotal = roll + driverMod + carMod;
+    if (flow) rollTotal += 1;
+    if (risk) rollTotal += 1;
+    return rollTotal;
+};
+
