@@ -21,8 +21,9 @@ export const drivers1978: DriverRaw[] = [
         carNumber: 1,
         traits: ["Cool and calm"]
     },
+
     {
-        id: "john_watson",
+        id: "watson",
         name: "John Watson",
         nickname: "Wattie",
         attributes: {
@@ -108,7 +109,7 @@ export const drivers1978: DriverRaw[] = [
         traits: ["Showman"]
     },
     {
-        id: "james_hunt",
+        id: "hunt",
         name: "James Hunt",
         nickname: "Hunt the Shunt",
         attributes: {

@@ -14,22 +14,19 @@ export const tracks1978: Track[] = [
             "technicality": 3,
             "coldChance": 0,
 
-
+/*
             "rainChance": 0,
-            "intermediateChance": 0,
-            "dryChance": 100,
+            "intermediateChance": 100,
+            "dryChance": 0,
             "hotChance": 0,
             "dustyChance": 0,
+            */
 
-            /*
             "rainChance": 10,
             "intermediateChance": 10,
             "dryChance": 50,
             "hotChance": 25,
             "dustyChance": 5,
-
-             */
-
 
             "prestige": 4,
             "wearFactor": 5

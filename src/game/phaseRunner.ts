@@ -8,6 +8,7 @@ import {getTeamById} from "./gameHelpers";
 import {closeRandomOvertakingZone, createTrackModifiersForCondition, rollTrackCondition} from "../logic/trackLogic";
 import {debugTrackModifiers} from "../debug/debug";
 import {setupFocusLoop} from "../inputLoops/setupFocusLoop";
+import {START_GRID_GROUPING} from "./constants";
 
 
 
@@ -45,7 +46,11 @@ export const runBuildUp = (phase: Phase, gameState: GameState): GameState => {
     io.print("Championship standings:");
     let position = 0;
     for (const driver of gameState.raceStandings) {
-        io.print((++position) + " " + driver.name + " (" + driver.carNumber + ") " + driver.team + " " + getChampionshipPoints(driver) + "pts");
+        // receive home GP flow points:
+        if (driver.homeTrackId === gameState.currentTrack.id) {
+            driver.flowPoints = (driver.flowPoints || 0) + 2;
+        }
+        io.print((++position) + " " + driver.name + " (" + driver.carNumber + ") " + driver.team + " " + getChampionshipPoints(driver) + "pts, flowPoints: " + (driver.flowPoints || "0"));
     }
     return gameState;
 }
@@ -96,10 +101,18 @@ export const runQualification = async  (phase: Phase, gameState: GameState): Pro
     // Use your dedicated sort function here
     const sortedPhaseOrder = sortRaceStandings(phaseOrder);
 
+    // sort race standings!
     gameState.raceStandings = sortedPhaseOrder;
 
-    // Optionally store qualifyingSession in gameState
-    // gameState.currentSession = qualifyingSession;
+    // line them up on the grid in abstract groups:
+    for (let counter = 0; counter < gameState.raceStandings.length; counter++) {
+        const driver = gameState.raceStandings[counter];
+
+        const row = Math.floor(counter / START_GRID_GROUPING); // 0, 1, 2, ...
+        driver.totalDistance = -row; // 0, -1, -2, ...
+    }
+
+
     io.print(formatGridTwoColumns(gameState.raceStandings, gameState));
     return gameState;
 };

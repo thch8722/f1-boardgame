@@ -226,15 +226,14 @@ export interface RaceCard extends Card {
 }
  */
 export type IncidentEffect =
-    | "spin"             // Lose time + places; also reduces qualifying potential
-    | "overheat"         // Forced to defend next turn (-1 pace, +1 defend)
-    | "majorOverheat"   // forced to back of (-1 pace, no defencebonus)
-    | "loseHandling"     // -1 to the car's handling attribute this round
-    | "loseSpeed"        // -1 to the car's speed attribute
-    | "loseComponentHP"  // Lose 1 HP on a component (e.g., brakes, engine); 0 HP is dangerous
-    | "loseSetup"        // Lose setup advantage; may affect pace or control depending on phase
-    | "contact"          // risk for me and for closest rival
-    | "crash"           // this is insane, but it happens
+    | "spin"
+    | "overheat"
+    | "majorOverheat"
+    | "loseSetup"
+    | "contact"
+    | "crash"
+    | { type: "loseComponentHP"; component: CarComponent };
+
 
 export type TrackCondition = "hot" | "cold" | "wet" | "dry" | "intermediate" | "dust"  // the last one is for cards
 //export type TrackCondition = "dry" | "wet" | "hot" | "cold" | "dust" | "variable";
@@ -271,6 +270,7 @@ export type PhaseType =
     | "SETUP"
     | "QUALIFICATION"
     | "RACE"
+    | "START"
     | "FINAL"
     | "CHECKERED";
 

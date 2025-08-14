@@ -12,7 +12,7 @@ export const incidentCardTemplates: IncidentCardTemplate[] = [
         effect: "spin",
         name: "Spin",
         description: "Time, momentum and places lost",
-        count: 2,
+        count: 3,
     },
     {
         effect: "overheat",
@@ -21,22 +21,34 @@ export const incidentCardTemplates: IncidentCardTemplate[] = [
         count: 3,
     },
     {
-        effect: "loseComponentHP",
-        name: "Damage",
-        description: "Damage to component",
-        count: 4,
+        effect: "majorOverheat",
+        name: "Major Overheating",
+        description: "Forced to back off completely this turn",
+        count: 1,
     },
     {
-        effect: "loseHandling",
-        name: "Handling Loss",
-        description: "Loss of car handling (-1 handling)",
-        count: 2,
+        effect: { type: "loseComponentHP", component: "engine" },
+        name: "Engine Damage",
+        description: "Lose 1 HP on engine",
+        count: 2
     },
     {
-        effect: "loseSpeed",
-        name: "Speed Loss",
-        description: "Loss of car speed (-1 speed)",
-        count: 2,
+        effect: { type: "loseComponentHP", component: "brakes" },
+        name: "brakes Damage",
+        description: "Lose 1 HP on breaks",
+        count: 2
+    },
+    {
+        effect: { type: "loseComponentHP", component: "gearbox" },
+        name: "Gearbox Damage",
+        description: "Lose 1 HP on gearbox",
+        count: 2
+    },
+    {
+        effect: { type: "loseComponentHP", component: "tyres" },
+        name: "tyre Wear",
+        description: "Lose 1 HP on tyres",
+        count: 4
     },
     {
         effect: "loseSetup",

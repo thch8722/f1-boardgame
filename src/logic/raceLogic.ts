@@ -15,7 +15,7 @@ export const driveLap = (
     io.debug(`Before lap - driver ${driver.name} tireType=${driver.car.tireType}`);
 
     const carScore = getCarLapScore(driver.car, gameState);
-    const driverScore = getDriverQualificationScore(driver);
+    const driverScore = getDriverLapScore(driver, gameState);
     const rawPace = carScore + driverScore;
     const pace = Math.max(0, rawPace);
     const paceFactored = getPaceFactored(pace, gameState);
@@ -75,29 +75,58 @@ export const getCarLapScore = (car: CarInstance, gameState: GameState) => {
         }
     }
 
-    const isTrackWet = gameState.currentCondition === "wet";
+    const condition = gameState.currentCondition;
 
     // Penalty only when tyre type doesn't match weather
-    if (!isTrackWet && car.tireType === "wet") {
-        handlingMod -= 2; // rain tyres on dry
-    }
-    if (isTrackWet && car.tireType === "dry") {
+    if (condition === "wet" && car.tireType === "dry") {
         handlingMod -= 2; // slicks on wet
+    }
+    if (condition === "dry" && car.tireType === "wet") {
+        handlingMod -= 2; // wets on dry
     }
 
     const score = speedMod * speedBias + handlingMod * technicality;
-    io.debug(`getCarLapScore tyre=${car.tireType} wet=${isTrackWet} => score=${score.toFixed(2)}`);
+    io.debug(`getCarLapScore tyre=${car.tireType} condition=${condition} => score=${score.toFixed(2)}`);
     return score;
 };
 
 
-export const getDriverQualificationScore = (driver: GameDriver) => {
+export const getDriverLapScore = (driver: GameDriver, gameState: GameState) => {
     const speed = getDriverAttributeMod(driver, "speed");
     const focus = getDriverAttributeMod(driver, "focus");
+    const bravery  = getDriverAttributeMod(driver, "bravery");
+    const raceCraft = getDriverAttributeMod(driver, "racecraft");
+    const rainSkill = getDriverAttributeMod(driver, "rainSkill");
 
-    // TODO review this, maybe we want ALL driver scores here
-    return speed * 2 + focus * 1; // if you want focus to matter less
+    // Weather conditions take precedence over phase scoring
+    if (gameState.currentCondition === "wet") {
+        return useYourBestSkill(raceCraft, rainSkill, Math.ceil((focus + bravery) / 2));
+    }
+
+    if (gameState.currentCondition === "intermediate") {
+        return useYourBestSkill(speed, raceCraft, Math.ceil((rainSkill + bravery) / 2));
+    }
+
+    const phaseType = gameState.currentPhase?.type;
+    switch (phaseType) {
+        case "QUALIFICATION":
+        case "FINAL":
+            return useYourBestSkill(speed, speed, focus);
+        case "START":
+            return useYourBestSkill(raceCraft, raceCraft, bravery);
+
+        default:
+            const focusBravery = Math.ceil((focus + bravery) / 2); // average, rounded down
+            io.debug(`phaseType: ${phaseType} - treated as default`);
+            return useYourBestSkill(speed, speed, focusBravery);
+    }
 };
+
+export const useYourBestSkill = (skill1: number, skill2: number, skill3: number): number => {
+    const sum = skill1 + skill2 + skill3;
+    const best = Math.max(skill1, skill2, skill3);
+    return sum + best;
+}
 
 // test function:
 export const printCarBaseAttributes = (car: CarInstance) => {
